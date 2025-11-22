@@ -1,0 +1,52 @@
+/**
+ * Main SCSS Entry Point
+ * WeInvite Events Theme
+ *
+ * This file imports all SCSS partials in the correct order.
+ * Compiled output: /assets/css/main.css
+ *
+ * @package WeInvite_Theme
+ * @since 1.0.0
+ */
+
+// ==========================================================================
+// 1. CONFIGURATION (Variables & Mixins)
+// ==========================================================================
+@import 'variables';
+@import 'mixins';
+
+// ==========================================================================
+// 2. BASE STYLES (Reset & Global)
+// ==========================================================================
+@import 'base';
+@import 'typography';
+
+// ==========================================================================
+// 3. LAYOUT (Structure & Grid)
+// ==========================================================================
+@import 'layout';
+
+// ==========================================================================
+// 4. COMPONENTS (UI Elements)
+// ==========================================================================
+@import 'buttons';
+@import 'cards';
+@import 'forms';
+@import 'badges';
+@import 'modals';
+
+// ==========================================================================
+// 5. PAGE-SPECIFIC STYLES
+// ==========================================================================
+@import 'pages/common';
+@import 'pages/landing';
+@import 'pages/features';
+@import 'pages/pricing';
+@import 'pages/about';
+@import 'pages/contact';
+@import 'pages/faq';
+
+// ==========================================================================
+// 6. UTILITIES (Helper Classes - loaded last)
+// ==========================================================================
+// Additional utility classes are in _base.scss

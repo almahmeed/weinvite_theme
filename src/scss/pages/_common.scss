@@ -1,0 +1,437 @@
+/**
+ * Common Page Styles
+ * Shared styles for all pages
+ *
+ * @package WeInvite_Theme
+ * @since 1.0.0
+ */
+
+// ==========================================================================
+// Page Hero
+// ==========================================================================
+
+.hero-page {
+    padding: $space-3xl 0 $space-2xl;
+    background: linear-gradient(135deg, rgba($primary-purple-light, 0.05) 0%, rgba($primary-purple, 0.1) 100%);
+    border-bottom: 1px solid $border-light;
+
+    @include max-md {
+        padding: $space-2xl 0 $space-xl;
+    }
+
+    .hero-content {
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    .hero-title {
+        margin-bottom: $space-md;
+    }
+
+    .hero-description {
+        color: $text-secondary;
+        margin-bottom: 0;
+    }
+}
+
+// ==========================================================================
+// Section Headers
+// ==========================================================================
+
+.section-header {
+    margin-bottom: $space-3xl;
+
+    &.text-center {
+        max-width: 800px;
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: $space-3xl;
+    }
+
+    .section-title {
+        margin-bottom: $space-md;
+    }
+
+    .section-subtitle {
+        color: $text-secondary;
+        font-size: $font-size-lg;
+        margin-bottom: 0;
+    }
+}
+
+// ==========================================================================
+// Contact Details
+// ==========================================================================
+
+.contact-detail {
+    display: flex;
+    gap: $space-md;
+
+    .contact-detail-icon {
+        font-size: 32px;
+        flex-shrink: 0;
+    }
+
+    .contact-detail-content {
+        flex: 1;
+
+        h5 {
+            margin-bottom: $space-xs;
+        }
+
+        p {
+            color: $text-secondary;
+            margin-bottom: $space-sm;
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+        }
+
+        .social-links {
+            display: flex;
+            gap: $space-xs;
+            flex-wrap: wrap;
+
+            &.contact-social-icons {
+                gap: $space-sm;
+
+                .social-icon-btn {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    width: 44px;
+                    height: 44px;
+                    border-radius: $border-radius-round;
+                    background: rgba($primary-purple, 0.1);
+                    color: $primary-purple;
+                    transition: $transition-all;
+                    text-decoration: none;
+
+                    svg {
+                        width: 20px;
+                        height: 20px;
+                    }
+
+                    &:hover {
+                        background: $primary-purple;
+                        color: $text-white;
+                        transform: translateY(-2px);
+                        box-shadow: $shadow-md;
+                    }
+
+                    &:active {
+                        transform: translateY(0);
+                    }
+                }
+            }
+        }
+    }
+}
+
+// ==========================================================================
+// Support Hours
+// ==========================================================================
+
+.support-hours {
+    .support-hours-item {
+        display: flex;
+        justify-content: space-between;
+        padding: $space-sm 0;
+        border-bottom: 1px solid $border-light;
+
+        &:last-child {
+            border-bottom: none;
+        }
+
+        .day {
+            font-weight: $font-weight-medium;
+            color: $text-primary;
+        }
+
+        .hours {
+            color: $text-secondary;
+        }
+    }
+}
+
+// ==========================================================================
+// Team Members
+// ==========================================================================
+
+.team-member {
+    margin-bottom: $space-xl;
+
+    .team-avatar {
+        width: 150px;
+        height: 150px;
+        margin: 0 auto $space-md;
+        border-radius: 50%;
+        overflow: hidden;
+        border: 4px solid $border-light;
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    }
+
+    .team-name {
+        margin-bottom: $space-xs;
+    }
+
+    .team-role {
+        color: $text-secondary;
+        font-size: $font-size-sm;
+        margin-bottom: $space-md;
+    }
+
+    .team-social {
+        display: flex;
+        gap: $space-sm;
+        justify-content: center;
+
+        .social-link {
+            font-size: $font-size-sm;
+            color: $primary-purple;
+            text-decoration: none;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+}
+
+// ==========================================================================
+// Value Cards
+// ==========================================================================
+
+.value-card {
+    padding: $space-lg;
+
+    .value-icon {
+        font-size: 48px;
+        margin-bottom: $space-md;
+    }
+
+    h3 {
+        margin-bottom: $space-sm;
+    }
+
+    p {
+        color: $text-secondary;
+        margin: 0;
+    }
+}
+
+// ==========================================================================
+// Stats Box
+// ==========================================================================
+
+.stat-box {
+    padding: $space-lg;
+
+    .stat-value {
+        font-size: $font-size-h2;
+        font-weight: $font-weight-bold;
+        color: $primary-purple;
+        margin-bottom: $space-xs;
+    }
+
+    .stat-label {
+        font-size: $font-size-sm;
+        color: $text-secondary;
+    }
+}
+
+// ==========================================================================
+// Contact Info Cards
+// ==========================================================================
+
+.contact-info-card {
+    padding: $space-lg;
+
+    .contact-icon {
+        font-size: 48px;
+        margin-bottom: $space-md;
+    }
+
+    h4 {
+        margin-bottom: $space-md;
+    }
+
+    p {
+        color: $text-secondary;
+        margin-bottom: 0;
+
+        a {
+            color: $primary-purple;
+            text-decoration: none;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+}
+
+// ==========================================================================
+// FAQ Accordion
+// ==========================================================================
+
+.faq-category {
+    margin-bottom: $space-3xl;
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+
+    .faq-category-title {
+        margin-bottom: $space-xl;
+        padding-bottom: $space-md;
+        border-bottom: 2px solid $primary-purple;
+    }
+}
+
+.faq-accordion {
+    .faq-item {
+        margin-bottom: $space-md;
+        border: 1px solid $border-light;
+        border-radius: $radius-md;
+        overflow: hidden;
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+
+        .faq-question {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: $space-lg;
+            background: $bg-primary;
+            border: none;
+            text-align: left;
+            font-size: $font-size-lg;
+            font-weight: $font-weight-semibold;
+            color: $text-primary;
+            cursor: pointer;
+            transition: $transition-all;
+
+            &:hover {
+                background: $bg-secondary;
+            }
+
+            &[aria-expanded="true"] {
+                background: $bg-secondary;
+                border-bottom: 1px solid $border-light;
+            }
+
+            .faq-icon {
+                font-size: $font-size-h3;
+                color: $primary-purple;
+                line-height: 1;
+                margin-left: $space-md;
+            }
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+
+            &.show {
+                max-height: 1000px;
+                transition: max-height 0.3s ease-in;
+            }
+
+            > * {
+                padding: 0 $space-lg $space-lg;
+            }
+
+            p, ul, ol {
+                color: $text-secondary;
+                line-height: 1.8;
+            }
+
+            ul, ol {
+                margin-left: $space-lg;
+            }
+        }
+    }
+}
+
+// ==========================================================================
+// Legal Pages
+// ==========================================================================
+
+.legal-page {
+    .legal-content {
+        font-size: $font-size-base;
+        line-height: 1.8;
+
+        .legal-intro {
+            margin-bottom: $space-3xl;
+        }
+
+        .legal-section {
+            margin-bottom: $space-3xl;
+
+            h2 {
+                margin-bottom: $space-lg;
+                color: $primary-purple;
+            }
+
+            h3 {
+                margin-top: $space-xl;
+                margin-bottom: $space-md;
+                font-size: $font-size-lg;
+            }
+
+            p {
+                margin-bottom: $space-md;
+                color: $text-secondary;
+            }
+
+            ul, ol {
+                margin: $space-md 0 $space-md $space-xl;
+                color: $text-secondary;
+
+                li {
+                    margin-bottom: $space-sm;
+                }
+            }
+
+            a {
+                color: $primary-purple;
+                text-decoration: underline;
+
+                &:hover {
+                    color: $primary-purple-dark;
+                }
+            }
+        }
+
+        .legal-footer {
+            margin-top: $space-3xl;
+            padding-top: $space-xl;
+            border-top: 2px solid $border-light;
+        }
+    }
+}
+
+// ==========================================================================
+// Related Links
+// ==========================================================================
+
+.section-related-links {
+    .related-links {
+        display: flex;
+        gap: $space-md;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+}

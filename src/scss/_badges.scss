@@ -1,0 +1,366 @@
+/**
+ * Badge Components
+ * WeInvite Events Theme
+ *
+ * @package WeInvite_Theme
+ * @since 1.0.0
+ */
+
+// ==========================================================================
+// Base Badge Styles
+// ==========================================================================
+
+.badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: $space-xs $space-sm;
+    font-size: $font-size-xs;
+    font-weight: $font-weight-semibold;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: $radius-sm;
+    transition: $transition-all;
+
+    // Icon support
+    .icon {
+        margin-right: $space-xs;
+        font-size: 1.1em;
+    }
+}
+
+// ==========================================================================
+// Badge Variants (Solid)
+// ==========================================================================
+
+.badge-primary {
+    color: $text-white;
+    background-color: $primary-purple;
+}
+
+.badge-success {
+    color: $text-white;
+    background-color: $success-green;
+}
+
+.badge-warning {
+    color: $text-white;
+    background-color: $warning-orange;
+}
+
+.badge-danger {
+    color: $text-white;
+    background-color: $error-red;
+}
+
+.badge-info {
+    color: $text-white;
+    background-color: $info-blue;
+}
+
+.badge-secondary {
+    color: $text-primary;
+    background-color: $bg-secondary;
+}
+
+.badge-light {
+    color: $text-primary;
+    background-color: $bg-secondary;
+    border: 1px solid $border-light;
+}
+
+.badge-dark {
+    color: $text-white;
+    background-color: $neutral-900;
+}
+
+// ==========================================================================
+// Badge Variants (Outline)
+// ==========================================================================
+
+.badge-outline-primary {
+    color: $primary-purple;
+    background-color: transparent;
+    border: 1px solid $primary-purple;
+}
+
+.badge-outline-success {
+    color: $success-green;
+    background-color: transparent;
+    border: 1px solid $success-green;
+}
+
+.badge-outline-warning {
+    color: $warning-orange;
+    background-color: transparent;
+    border: 1px solid $warning-orange;
+}
+
+.badge-outline-danger {
+    color: $error-red;
+    background-color: transparent;
+    border: 1px solid $error-red;
+}
+
+.badge-outline-info {
+    color: $info-blue;
+    background-color: transparent;
+    border: 1px solid $info-blue;
+}
+
+// ==========================================================================
+// Badge Variants (Soft/Light)
+// ==========================================================================
+
+.badge-soft-primary {
+    color: $primary-purple-dark;
+    background-color: rgba($primary-purple, 0.1);
+}
+
+.badge-soft-success {
+    color: darken($success-green, 15%);
+    background-color: rgba($success-green, 0.1);
+}
+
+.badge-soft-warning {
+    color: darken($warning-orange, 15%);
+    background-color: rgba($warning-orange, 0.1);
+}
+
+.badge-soft-danger {
+    color: darken($error-red, 15%);
+    background-color: rgba($error-red, 0.1);
+}
+
+.badge-soft-info {
+    color: darken($info-blue, 15%);
+    background-color: rgba($info-blue, 0.1);
+}
+
+// ==========================================================================
+// Badge Sizes
+// ==========================================================================
+
+.badge-sm {
+    padding: 2px $space-xs;
+    font-size: 10px;
+}
+
+.badge-lg {
+    padding: $space-sm $space-md;
+    font-size: $font-size-sm;
+}
+
+// ==========================================================================
+// Pill Badge (Rounded)
+// ==========================================================================
+
+.badge-pill {
+    border-radius: $radius-full;
+    padding-left: $space-md;
+    padding-right: $space-md;
+}
+
+// ==========================================================================
+// Status Badges (WeInvite Specific)
+// ==========================================================================
+
+// RSVP Status
+.badge-rsvp-attending {
+    @extend .badge-success;
+}
+
+.badge-rsvp-maybe {
+    @extend .badge-warning;
+}
+
+.badge-rsvp-declined {
+    @extend .badge-danger;
+}
+
+.badge-rsvp-pending {
+    @extend .badge-secondary;
+}
+
+// Event Status
+.badge-event-upcoming {
+    @extend .badge-info;
+}
+
+.badge-event-ongoing {
+    @extend .badge-success;
+}
+
+.badge-event-completed {
+    @extend .badge-secondary;
+}
+
+.badge-event-cancelled {
+    @extend .badge-danger;
+}
+
+.badge-event-draft {
+    @extend .badge-outline-primary;
+}
+
+// Event Type
+.badge-event-public {
+    @extend .badge-soft-success;
+}
+
+.badge-event-private {
+    @extend .badge-soft-warning;
+}
+
+.badge-event-vip {
+    @extend .badge-soft-primary;
+    background: $gradient-primary;
+    color: $text-white;
+}
+
+// Invitation Status
+.badge-invitation-sent {
+    @extend .badge-soft-info;
+}
+
+.badge-invitation-opened {
+    @extend .badge-soft-success;
+}
+
+.badge-invitation-bounced {
+    @extend .badge-soft-danger;
+}
+
+// ==========================================================================
+// Badge with Dot
+// ==========================================================================
+
+.badge-dot {
+    position: relative;
+    padding-left: calc(#{$space-sm} + 8px);
+
+    &::before {
+        content: '';
+        position: absolute;
+        left: $space-sm;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background-color: currentColor;
+    }
+}
+
+// ==========================================================================
+// Badge with Close Button
+// ==========================================================================
+
+.badge-dismissible {
+    padding-right: calc(#{$space-sm} + 16px);
+    position: relative;
+
+    .badge-close {
+        position: absolute;
+        right: $space-xs;
+        top: 50%;
+        transform: translateY(-50%);
+        background: none;
+        border: none;
+        color: currentColor;
+        opacity: 0.7;
+        cursor: pointer;
+        padding: 0;
+        width: 14px;
+        height: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+        line-height: 1;
+        transition: $transition-fast;
+
+        &:hover {
+            opacity: 1;
+        }
+    }
+}
+
+// ==========================================================================
+// Badge Counter (Notification)
+// ==========================================================================
+
+.badge-counter {
+    min-width: 20px;
+    height: 20px;
+    padding: 0 6px;
+    border-radius: $radius-full;
+    font-size: 11px;
+    font-weight: $font-weight-bold;
+    line-height: 20px;
+}
+
+// Badge on element (e.g., button with notification count)
+.has-badge {
+    position: relative;
+
+    .badge-notification {
+        position: absolute;
+        top: -8px;
+        right: -8px;
+        z-index: 1;
+        @extend .badge-counter;
+        @extend .badge-danger;
+    }
+}
+
+// ==========================================================================
+// Badge Group
+// ==========================================================================
+
+.badge-group {
+    display: inline-flex;
+    gap: $space-xs;
+    flex-wrap: wrap;
+}
+
+// ==========================================================================
+// Animated Badge (Pulse)
+// ==========================================================================
+
+.badge-pulse {
+    animation: badge-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+
+    @keyframes badge-pulse {
+        0%, 100% {
+            opacity: 1;
+        }
+        50% {
+            opacity: 0.7;
+        }
+    }
+}
+
+// ==========================================================================
+// Credit Badge (WeInvite Specific)
+// ==========================================================================
+
+.credit-badge {
+    @extend .badge;
+    @extend .badge-soft-primary;
+    font-size: $font-size-sm;
+    padding: $space-xs $space-md;
+
+    .credit-icon {
+        margin-right: $space-xs;
+        font-size: 1.2em;
+        color: $primary-purple;
+    }
+
+    .credit-amount {
+        font-weight: $font-weight-bold;
+        color: $primary-purple;
+    }
+}

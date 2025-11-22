@@ -1,0 +1,490 @@
+/**
+ * Card Components
+ * WeInvite Events Theme
+ *
+ * @package WeInvite_Theme
+ * @since 1.0.0
+ */
+
+// ==========================================================================
+// Base Card Styles
+// ==========================================================================
+
+.card {
+    @include card-base;
+    background: $bg-primary;
+    border: 1px solid $border-light;
+    border-radius: $radius-lg;
+    overflow: hidden;
+    transition: $transition-all;
+
+    &:hover {
+        transform: translateY(-4px);
+        box-shadow: $shadow-lg;
+    }
+}
+
+.card-header {
+    padding: $space-lg;
+    border-bottom: 1px solid $border-light;
+    background: $bg-secondary;
+
+    .card-title {
+        margin: 0;
+        font-size: $font-size-h4;
+        font-weight: $font-weight-semibold;
+        color: $text-primary;
+    }
+
+    .card-subtitle {
+        margin: $space-xs 0 0;
+        font-size: $font-size-sm;
+        color: $text-secondary;
+    }
+}
+
+.card-body {
+    padding: $space-lg;
+}
+
+.card-footer {
+    padding: $space-lg;
+    border-top: 1px solid $border-light;
+    background: $bg-secondary;
+
+    // Footer with actions
+    &.card-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: $space-sm;
+    }
+}
+
+.card-img {
+    width: 100%;
+    height: auto;
+    display: block;
+
+    &-top {
+        border-radius: $radius-lg $radius-lg 0 0;
+    }
+
+    &-bottom {
+        border-radius: 0 0 $radius-lg $radius-lg;
+    }
+}
+
+// ==========================================================================
+// Card Variants
+// ==========================================================================
+
+// Bordered Card
+.card-bordered {
+    border: 2px solid $border-medium;
+
+    &:hover {
+        border-color: $primary-purple;
+    }
+}
+
+// Elevated Card
+.card-elevated {
+    box-shadow: $shadow-md;
+    border: none;
+
+    &:hover {
+        box-shadow: $shadow-xl;
+    }
+}
+
+// Outlined Card
+.card-outline {
+    background: transparent;
+    border: 2px solid $primary-purple;
+}
+
+// ==========================================================================
+// Event Card (Specific to WeInvite)
+// ==========================================================================
+
+.event-card {
+    @extend .card;
+    position: relative;
+
+    .event-image {
+        position: relative;
+        height: 200px;
+        background-size: cover;
+        background-position: center;
+
+        // Overlay gradient
+        &::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 50%;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+        }
+
+        // Event type badge
+        .event-type-badge {
+            position: absolute;
+            top: $space-md;
+            right: $space-md;
+            z-index: 1;
+        }
+    }
+
+    .event-content {
+        padding: $space-lg;
+    }
+
+    .event-title {
+        font-size: $font-size-h4;
+        font-weight: $font-weight-bold;
+        margin-bottom: $space-sm;
+        color: $text-primary;
+
+        @include text-truncate;
+    }
+
+    .event-date {
+        display: flex;
+        align-items: center;
+        gap: $space-xs;
+        color: $text-secondary;
+        font-size: $font-size-sm;
+        margin-bottom: $space-sm;
+
+        .icon {
+            color: $primary-purple;
+        }
+    }
+
+    .event-location {
+        display: flex;
+        align-items: center;
+        gap: $space-xs;
+        color: $text-secondary;
+        font-size: $font-size-sm;
+        margin-bottom: $space-md;
+
+        @include text-truncate;
+
+        .icon {
+            color: $primary-purple;
+        }
+    }
+
+    .event-stats {
+        display: flex;
+        justify-content: space-between;
+        padding-top: $space-md;
+        border-top: 1px solid $border-light;
+        font-size: $font-size-sm;
+
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: $space-xs;
+            color: $text-secondary;
+
+            .stat-value {
+                font-weight: $font-weight-semibold;
+                color: $text-primary;
+            }
+        }
+    }
+
+    .event-actions {
+        display: flex;
+        gap: $space-sm;
+        margin-top: $space-md;
+    }
+}
+
+// ==========================================================================
+// Stat Card (Dashboard Statistics)
+// ==========================================================================
+
+.stat-card {
+    @extend .card;
+    padding: $space-lg;
+
+    .stat-icon {
+        width: 48px;
+        height: 48px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: $radius-md;
+        margin-bottom: $space-md;
+        font-size: 24px;
+
+        &.stat-icon-primary {
+            background: rgba($primary-purple, 0.1);
+            color: $primary-purple;
+        }
+
+        &.stat-icon-success {
+            background: rgba($success-green, 0.1);
+            color: $success-green;
+        }
+
+        &.stat-icon-warning {
+            background: rgba($warning-orange, 0.1);
+            color: $warning-orange;
+        }
+
+        &.stat-icon-info {
+            background: rgba($info-blue, 0.1);
+            color: $info-blue;
+        }
+    }
+
+    .stat-value {
+        font-size: $font-size-h2;
+        font-weight: $font-weight-bold;
+        color: $text-primary;
+        margin-bottom: $space-xs;
+    }
+
+    .stat-label {
+        font-size: $font-size-sm;
+        color: $text-secondary;
+        margin-bottom: $space-sm;
+    }
+
+    .stat-change {
+        display: flex;
+        align-items: center;
+        gap: $space-xs;
+        font-size: $font-size-sm;
+
+        &.stat-up {
+            color: $success-green;
+        }
+
+        &.stat-down {
+            color: $error-red;
+        }
+
+        .icon {
+            font-size: 16px;
+        }
+    }
+}
+
+// ==========================================================================
+// Credit Package Card
+// ==========================================================================
+
+.package-card {
+    @extend .card;
+    text-align: center;
+    position: relative;
+
+    // Popular badge
+    &.package-popular {
+        border-color: $primary-purple;
+        border-width: 2px;
+
+        &::before {
+            content: 'Most Popular';
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: $gradient-primary;
+            color: $text-white;
+            padding: $space-xs $space-md;
+            border-radius: $radius-full;
+            font-size: $font-size-xs;
+            font-weight: $font-weight-semibold;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+    }
+
+    .package-header {
+        padding: $space-xl $space-lg;
+        background: $bg-secondary;
+        border-bottom: 1px solid $border-light;
+    }
+
+    .package-name {
+        font-size: $font-size-h4;
+        font-weight: $font-weight-bold;
+        color: $text-primary;
+        margin-bottom: $space-sm;
+    }
+
+    .package-price {
+        font-size: $font-size-h1;
+        font-weight: $font-weight-bold;
+        color: $primary-purple;
+        margin-bottom: $space-xs;
+
+        .currency {
+            font-size: $font-size-h3;
+            vertical-align: super;
+        }
+    }
+
+    .package-credits {
+        font-size: $font-size-base;
+        color: $text-secondary;
+    }
+
+    .package-body {
+        padding: $space-xl $space-lg;
+    }
+
+    .package-features {
+        list-style: none;
+        padding: 0;
+        margin: 0 0 $space-xl;
+
+        li {
+            padding: $space-sm 0;
+            color: $text-secondary;
+
+            &::before {
+                content: '✓';
+                color: $success-green;
+                font-weight: $font-weight-bold;
+                margin-right: $space-sm;
+            }
+        }
+    }
+
+    .package-cta {
+        .btn {
+            width: 100%;
+        }
+    }
+}
+
+// ==========================================================================
+// User Card (Profile, Guest List)
+// ==========================================================================
+
+.user-card {
+    @extend .card;
+    display: flex;
+    align-items: center;
+    gap: $space-md;
+    padding: $space-md;
+
+    .user-avatar {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background: $gradient-primary;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: $text-white;
+        font-weight: $font-weight-bold;
+        font-size: $font-size-lg;
+        flex-shrink: 0;
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+    }
+
+    .user-info {
+        flex: 1;
+        min-width: 0; // For text truncation
+    }
+
+    .user-name {
+        font-weight: $font-weight-semibold;
+        color: $text-primary;
+        margin-bottom: $space-xs;
+
+        @include text-truncate;
+    }
+
+    .user-phone {
+        font-size: $font-size-sm;
+        color: $text-secondary;
+
+        @include text-truncate;
+    }
+
+    .user-actions {
+        display: flex;
+        gap: $space-xs;
+    }
+}
+
+// ==========================================================================
+// Card Grid
+// ==========================================================================
+
+.card-grid {
+    display: grid;
+    gap: $space-lg;
+
+    // Default: 1 column
+    grid-template-columns: 1fr;
+
+    // 2 columns on tablet
+    @include md {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    // 3 columns on desktop
+    @include lg {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    // 4 columns on large desktop
+    @include xl {
+        &.card-grid-4 {
+            grid-template-columns: repeat(4, 1fr);
+        }
+    }
+}
+
+// ==========================================================================
+// Card Utilities
+// ==========================================================================
+
+// Clickable card
+.card-clickable {
+    cursor: pointer;
+    transition: $transition-all;
+
+    &:hover {
+        transform: translateY(-4px);
+        box-shadow: $shadow-lg;
+    }
+}
+
+// Loading card state
+.card-loading {
+    position: relative;
+    pointer-events: none;
+
+    &::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba($bg-primary, 0.8);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 10;
+    }
+}

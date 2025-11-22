@@ -1,0 +1,688 @@
+/**
+ * Layout Styles
+ * WeInvite Events Theme
+ *
+ * @package WeInvite_Theme
+ * @since 1.0.0
+ */
+
+// ==========================================================================
+// CONTAINER
+// ==========================================================================
+
+.container {
+    @include container;
+}
+
+.container-fluid {
+    width: 100%;
+    padding-right: $space-md;
+    padding-left: $space-md;
+}
+
+// ==========================================================================
+// GRID SYSTEM
+// ==========================================================================
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: -#{$space-md};
+    margin-right: -#{$space-md};
+}
+
+.col {
+    flex: 1 0 0%;
+    padding-left: $space-md;
+    padding-right: $space-md;
+}
+
+// Column Sizes (12-column grid)
+@for $i from 1 through 12 {
+    .col-#{$i} {
+        flex: 0 0 auto;
+        width: percentage($i / 12);
+        padding-left: $space-md;
+        padding-right: $space-md;
+    }
+}
+
+// Responsive Columns
+@include sm {
+    @for $i from 1 through 12 {
+        .col-sm-#{$i} {
+            flex: 0 0 auto;
+            width: percentage($i / 12);
+        }
+    }
+}
+
+@include md {
+    @for $i from 1 through 12 {
+        .col-md-#{$i} {
+            flex: 0 0 auto;
+            width: percentage($i / 12);
+        }
+    }
+}
+
+@include lg {
+    @for $i from 1 through 12 {
+        .col-lg-#{$i} {
+            flex: 0 0 auto;
+            width: percentage($i / 12);
+        }
+    }
+}
+
+// ==========================================================================
+// SITE STRUCTURE
+// ==========================================================================
+
+.site-wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.site-content {
+    flex: 1 0 auto;
+}
+
+.site-header,
+.site-footer {
+    flex-shrink: 0;
+}
+
+// ==========================================================================
+// HEADER
+// ==========================================================================
+
+.site-header {
+    background: $bg-primary;
+    border-bottom: 1px solid $border-light;
+    padding: $space-md 0;
+    position: sticky;
+    top: 0;
+    z-index: $z-index-sticky;
+    box-shadow: $shadow-sm;
+
+    .header-inner {
+        @include flex-between;
+    }
+
+    .site-branding {
+        flex-shrink: 0;
+
+        .site-title {
+            display: inline-block;
+            font-size: $font-size-h4;
+            font-weight: $font-weight-bold;
+            color: $text-primary;
+            text-decoration: none;
+
+            &:hover {
+                text-decoration: none;
+            }
+
+            .site-logo {
+                height: 40px;
+                width: auto;
+                max-width: 200px;
+                display: block;
+
+                @include md {
+                    height: 50px;
+                    max-width: 250px;
+                }
+            }
+        }
+
+        .custom-logo-link {
+            display: block;
+
+            img,
+            .custom-logo {
+                display: block;
+                height: 40px;
+                width: auto;
+                max-width: 200px;
+
+                @include md {
+                    height: 50px;
+                    max-width: 250px;
+                }
+            }
+        }
+    }
+
+    .main-navigation {
+        display: none;
+
+        @include md {
+            display: block;
+        }
+
+        .menu-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-menu {
+            @include flex-center;
+            gap: $space-lg;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+
+            > li {
+                list-style: none;
+                position: relative;
+
+                // Parent menu item with submenu
+                &.menu-item-has-children {
+                    > a::after {
+                        content: '\25BE'; // Down arrow
+                        margin-left: 6px;
+                        font-size: 12px;
+                        transition: transform 0.3s ease;
+                    }
+
+                    &:hover > a::after {
+                        transform: rotate(180deg);
+                    }
+                }
+            }
+
+            a {
+                color: $text-primary;
+                font-weight: $font-weight-medium;
+                text-decoration: none;
+                transition: $transition-color;
+                font-size: 16px;
+                display: block;
+                padding: 8px 0;
+
+                &:hover {
+                    color: $primary-purple;
+                    text-decoration: none;
+                }
+            }
+
+            // Submenu (Dropdown)
+            .sub-menu {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                background: white;
+                min-width: 220px;
+                padding: 12px 0;
+                margin: 0;
+                list-style: none;
+                box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+                border-radius: 8px;
+                opacity: 0;
+                visibility: hidden;
+                transform: translateY(-10px);
+                transition: all 0.3s ease;
+                z-index: 1000;
+
+                li {
+                    list-style: none;
+                    padding: 0;
+
+                    a {
+                        padding: 12px 24px;
+                        font-size: 15px;
+                        color: $text-primary;
+                        white-space: nowrap;
+
+                        &:hover {
+                            background: rgba($primary-purple, 0.05);
+                            color: $primary-purple;
+                        }
+                    }
+                }
+            }
+
+            // Show submenu on hover
+            li:hover > .sub-menu {
+                opacity: 1;
+                visibility: visible;
+                transform: translateY(0);
+            }
+        }
+    }
+
+    .mobile-menu-toggle {
+        display: block;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        padding: 8px;
+        z-index: $z-index-modal + 1;
+        position: relative;
+
+        @include md {
+            display: none;
+        }
+
+        .menu-icon {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: $text-primary;
+            position: relative;
+            transition: $transition-all;
+
+            &::before,
+            &::after {
+                content: '';
+                display: block;
+                width: 24px;
+                height: 2px;
+                background: $text-primary;
+                position: absolute;
+                left: 0;
+                transition: $transition-all;
+            }
+
+            &::before {
+                top: -8px;
+            }
+
+            &::after {
+                bottom: -8px;
+            }
+        }
+
+        &.is-active {
+            .menu-icon {
+                background: transparent;
+
+                &::before {
+                    top: 0;
+                    transform: rotate(45deg);
+                }
+
+                &::after {
+                    bottom: 0;
+                    transform: rotate(-45deg);
+                }
+            }
+        }
+    }
+
+    .header-actions {
+        @include flex-center;
+        gap: $space-md;
+    }
+}
+
+// ==========================================================================
+// MOBILE MENU
+// ==========================================================================
+
+.mobile-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: $bg-primary;
+    z-index: $z-index-modal;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(-100%);
+    transition: all 0.3s ease;
+    overflow-y: auto;
+    padding-top: 80px;
+
+    @include md {
+        display: none;
+    }
+
+    &.is-active {
+        opacity: 1;
+        visibility: visible;
+        transform: translateX(0);
+    }
+
+    .mobile-menu-inner {
+        padding: $space-xl $space-md;
+    }
+
+    .mobile-nav-menu {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+
+        > li {
+            list-style: none;
+            border-bottom: 1px solid $border-light;
+
+            &:last-child {
+                border-bottom: none;
+            }
+
+            > a {
+                display: block;
+                padding: $space-md 0;
+                color: $text-primary;
+                font-weight: $font-weight-medium;
+                font-size: $font-size-large;
+                text-decoration: none;
+                transition: $transition-color;
+
+                &:hover {
+                    color: $primary-purple;
+                }
+            }
+
+            // Submenu in mobile
+            &.menu-item-has-children {
+                > a {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+
+                    &::after {
+                        content: '\25BE'; // Down arrow
+                        font-size: 14px;
+                        transition: transform 0.3s ease;
+                    }
+                }
+
+                &.submenu-open > a::after {
+                    transform: rotate(180deg);
+                }
+            }
+
+            .sub-menu {
+                list-style: none;
+                padding: 0;
+                margin: 0;
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.3s ease;
+                background: $bg-secondary;
+                border-radius: 8px;
+                margin-top: $space-sm;
+
+                li {
+                    list-style: none;
+
+                    a {
+                        display: block;
+                        padding: $space-sm $space-md;
+                        color: $text-secondary;
+                        text-decoration: none;
+                        font-size: $font-size-normal;
+
+                        &:hover {
+                            color: $primary-purple;
+                            background: rgba($primary-purple, 0.05);
+                        }
+                    }
+                }
+
+                &.submenu-open {
+                    max-height: 500px;
+                    padding: $space-sm 0;
+                }
+            }
+        }
+    }
+
+    .mobile-menu-actions {
+        margin-top: $space-2xl;
+        padding-top: $space-xl;
+        border-top: 1px solid $border-light;
+
+        .btn {
+            width: 100%;
+            margin-bottom: $space-md;
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+        }
+    }
+}
+
+// Prevent body scroll when mobile menu is open
+body.menu-open {
+    overflow: hidden;
+
+    @include md {
+        overflow: auto;
+    }
+}
+
+// ==========================================================================
+// FOOTER
+// ==========================================================================
+
+.site-footer {
+    background: $bg-dark;
+    color: $text-white;
+    padding: $space-2xl 0 $space-md;
+    margin-top: $space-4xl;
+
+    .footer-inner {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: $space-xl;
+
+        @include md {
+            grid-template-columns: 2fr 1fr 1fr;
+        }
+    }
+
+    .footer-branding {
+        .footer-tagline {
+            color: rgba($text-white, 0.8);
+            margin-top: $space-md;
+        }
+    }
+
+    .footer-nav-menu {
+        list-style: none;
+        padding: 0;
+
+        li {
+            margin-bottom: $space-sm;
+        }
+
+        a {
+            color: rgba($text-white, 0.8);
+            text-decoration: none;
+            transition: $transition-color;
+
+            &:hover {
+                color: $text-white;
+                text-decoration: none;
+            }
+        }
+    }
+
+    .footer-social {
+        @include flex-center;
+        gap: $space-md;
+
+        .social-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: $border-radius-round;
+            background: rgba($text-white, 0.1);
+            color: $text-white;
+            transition: $transition-all;
+
+            &:hover {
+                background: $primary-purple;
+                transform: translateY(-2px);
+            }
+        }
+    }
+
+    .footer-copyright {
+        border-top: 1px solid rgba($text-white, 0.1);
+        margin-top: $space-xl;
+        padding-top: $space-lg;
+
+        .copyright-inner {
+            @include flex-between;
+            flex-wrap: wrap;
+            gap: $space-md;
+
+            @include max-md {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        .copyright-text {
+            color: rgba($text-white, 0.6);
+            font-size: $font-size-small;
+            margin: 0;
+        }
+
+        .footer-legal {
+            display: flex;
+            gap: $space-md;
+            font-size: $font-size-small;
+
+            a {
+                color: rgba($text-white, 0.6);
+                text-decoration: none;
+
+                &:hover {
+                    color: $text-white;
+                }
+            }
+
+            .separator {
+                color: rgba($text-white, 0.3);
+            }
+        }
+    }
+}
+
+// ==========================================================================
+// MAIN CONTENT
+// ==========================================================================
+
+.site-main {
+    padding: $space-2xl 0;
+
+    @include md {
+        padding: $space-3xl 0;
+    }
+}
+
+// ==========================================================================
+// SECTIONS
+// ==========================================================================
+
+.section {
+    padding: $space-2xl 0;
+
+    @include md {
+        padding: $space-3xl 0;
+    }
+
+    &.section-sm {
+        padding: $space-xl 0;
+    }
+
+    &.section-lg {
+        padding: $space-4xl 0;
+    }
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: $space-2xl;
+
+    .section-title {
+        margin-bottom: $space-md;
+    }
+
+    .section-subtitle {
+        color: $text-secondary;
+        font-size: $font-size-large;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+}
+
+// ==========================================================================
+// HERO SECTION
+// ==========================================================================
+
+.hero {
+    padding: $space-3xl 0;
+    background: $gradient-secondary;
+    color: $text-white;
+    text-align: center;
+
+    @include md {
+        padding: $space-4xl 0;
+    }
+
+    .hero-title {
+        font-size: $font-size-h1;
+        color: $text-white;
+        margin-bottom: $space-lg;
+
+        @include md {
+            font-size: 3rem;
+        }
+    }
+
+    .hero-subtitle {
+        font-size: $font-size-large;
+        color: rgba($text-white, 0.9);
+        margin-bottom: $space-xl;
+        max-width: 700px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .hero-actions {
+        @include flex-center;
+        gap: $space-md;
+        flex-wrap: wrap;
+    }
+}
+
+// ==========================================================================
+// CONTENT AREA
+// ==========================================================================
+
+.content-area {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.entry-header {
+    margin-bottom: $space-xl;
+
+    .entry-title {
+        margin-bottom: $space-md;
+    }
+
+    .entry-meta {
+        color: $text-secondary;
+        font-size: $font-size-small;
+    }
+}
+
+.entry-content {
+    img {
+        margin: $space-lg 0;
+    }
+}

@@ -1,0 +1,25 @@
+/*
+Theme Name: WeInvite Events
+Theme URI: https://weinvite.com
+Description: Custom WordPress theme for WeInvite Events - Event management made simple
+Version: 1.0.0
+Author: WeInvite Team
+Author URI: https://weinvite.com
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: weinvite
+Tags: events, custom, responsive, mobile-first
+
+This theme is designed to match the WeInvite mobile app design system.
+*/
+
+/**
+ * Main stylesheet is compiled from SCSS
+ * See /src/scss/main.scss for source files
+ * Compiled output: /assets/css/main.css
+ */
+
+/* Prevent theme activation issues */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}

@@ -1,0 +1,532 @@
+/**
+ * Form Components
+ * WeInvite Events Theme
+ *
+ * @package WeInvite_Theme
+ * @since 1.0.0
+ */
+
+// ==========================================================================
+// Base Form Styles
+// ==========================================================================
+
+.form-group {
+    margin-bottom: $space-lg;
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+}
+
+.form-label {
+    display: block;
+    margin-bottom: $space-sm;
+    font-weight: $font-weight-medium;
+    color: $text-primary;
+    font-size: $font-size-sm;
+
+    // Required indicator
+    .required {
+        color: $error-red;
+        margin-left: $space-xs;
+    }
+
+    // Optional indicator
+    .optional {
+        color: $text-tertiary;
+        font-weight: $font-weight-normal;
+        font-size: $font-size-xs;
+    }
+}
+
+.form-control {
+    @include form-control-base;
+    width: 100%;
+    padding: $space-sm $space-md;
+    font-size: $font-size-base;
+    line-height: $line-height-base;
+    color: $text-primary;
+    background: $bg-primary;
+    border: 1px solid $border-medium;
+    border-radius: $radius-md;
+    transition: $transition-all;
+
+    &:focus {
+        outline: none;
+        border-color: $primary-purple;
+        box-shadow: $shadow-focus;
+    }
+
+    &::placeholder {
+        color: $text-tertiary;
+    }
+
+    &:disabled,
+    &[readonly] {
+        background: $bg-secondary;
+        color: $text-tertiary;
+        cursor: not-allowed;
+        opacity: 0.6;
+    }
+
+    // Invalid state
+    &.is-invalid {
+        border-color: $error-red;
+
+        &:focus {
+            border-color: $error-red;
+            box-shadow: 0 0 0 3px rgba($error-red, 0.1);
+        }
+    }
+
+    // Valid state
+    &.is-valid {
+        border-color: $success-green;
+
+        &:focus {
+            border-color: $success-green;
+            box-shadow: 0 0 0 3px rgba($success-green, 0.1);
+        }
+    }
+}
+
+// ==========================================================================
+// Form Input Sizes
+// ==========================================================================
+
+.form-control-sm {
+    padding: $space-xs $space-sm;
+    font-size: $font-size-sm;
+}
+
+.form-control-lg {
+    padding: $space-md $space-lg;
+    font-size: $font-size-lg;
+}
+
+// ==========================================================================
+// Textarea
+// ==========================================================================
+
+textarea.form-control {
+    min-height: 120px;
+    resize: vertical;
+    line-height: 1.6;
+}
+
+// Character counter
+.char-counter {
+    text-align: right;
+    font-size: $font-size-xs;
+    color: $text-tertiary;
+    margin-top: $space-xs;
+
+    .current {
+        font-weight: $font-weight-semibold;
+    }
+
+    &.text-danger {
+        color: $error-red;
+    }
+}
+
+// ==========================================================================
+// Select / Dropdown
+// ==========================================================================
+
+select.form-control {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23666' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right $space-md center;
+    background-size: 12px;
+    padding-right: $space-xl;
+    cursor: pointer;
+
+    &:disabled {
+        cursor: not-allowed;
+    }
+}
+
+// ==========================================================================
+// Checkbox & Radio
+// ==========================================================================
+
+.form-check {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: $space-md;
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+}
+
+.form-check-input {
+    width: 20px;
+    height: 20px;
+    margin-top: 2px;
+    margin-right: $space-sm;
+    flex-shrink: 0;
+    cursor: pointer;
+    appearance: none;
+    border: 2px solid $border-medium;
+    border-radius: $radius-sm;
+    background: $bg-primary;
+    transition: $transition-all;
+
+    &:checked {
+        background-color: $primary-purple;
+        border-color: $primary-purple;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='white'%3E%3Cpath d='M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: 12px;
+    }
+
+    &:focus {
+        outline: none;
+        border-color: $primary-purple;
+        box-shadow: $shadow-focus;
+    }
+
+    &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+
+    // Radio button
+    &[type="radio"] {
+        border-radius: 50%;
+
+        &:checked {
+            background-image: none;
+            border-width: 6px;
+        }
+    }
+}
+
+.form-check-label {
+    cursor: pointer;
+    color: $text-primary;
+    font-size: $font-size-base;
+    line-height: 1.5;
+
+    &:hover {
+        color: $primary-purple;
+    }
+}
+
+// Inline checkboxes/radios
+.form-check-inline {
+    display: inline-flex;
+    margin-right: $space-lg;
+}
+
+// ==========================================================================
+// Switch / Toggle
+// ==========================================================================
+
+.form-switch {
+    .form-check-input {
+        width: 44px;
+        height: 24px;
+        border-radius: $radius-full;
+        background-color: $border-medium;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3E%3Ccircle r='3' fill='white'/%3E%3C/svg%3E");
+        background-position: left center;
+        background-size: 20px;
+        transition: $transition-all;
+
+        &:checked {
+            background-color: $primary-purple;
+            background-position: right center;
+        }
+    }
+}
+
+// ==========================================================================
+// File Upload
+// ==========================================================================
+
+.form-file {
+    position: relative;
+
+    .form-file-input {
+        position: absolute;
+        opacity: 0;
+        width: 0.1px;
+        height: 0.1px;
+        z-index: -1;
+    }
+
+    .form-file-label {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: $space-lg;
+        border: 2px dashed $border-medium;
+        border-radius: $radius-md;
+        background: $bg-secondary;
+        cursor: pointer;
+        transition: $transition-all;
+        text-align: center;
+
+        &:hover {
+            border-color: $primary-purple;
+            background: rgba($primary-purple, 0.05);
+        }
+
+        .icon {
+            font-size: 32px;
+            color: $primary-purple;
+            margin-bottom: $space-sm;
+        }
+
+        .text {
+            color: $text-secondary;
+            font-size: $font-size-sm;
+
+            .browse {
+                color: $primary-purple;
+                font-weight: $font-weight-semibold;
+            }
+        }
+    }
+
+    // File preview
+    .file-preview {
+        margin-top: $space-md;
+
+        img {
+            max-width: 200px;
+            height: auto;
+            border-radius: $radius-md;
+            border: 1px solid $border-light;
+        }
+    }
+}
+
+// ==========================================================================
+// Input Groups
+// ==========================================================================
+
+.input-group {
+    display: flex;
+    align-items: stretch;
+    width: 100%;
+
+    .form-control {
+        flex: 1;
+        min-width: 0;
+    }
+
+    // Remove border radius on connected items
+    .form-control:not(:first-child) {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+    }
+
+    .form-control:not(:last-child) {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+}
+
+.input-group-text {
+    display: flex;
+    align-items: center;
+    padding: $space-sm $space-md;
+    font-size: $font-size-base;
+    font-weight: $font-weight-normal;
+    line-height: $line-height-base;
+    color: $text-secondary;
+    text-align: center;
+    white-space: nowrap;
+    background-color: $bg-secondary;
+    border: 1px solid $border-medium;
+
+    // First item
+    &:first-child {
+        border-top-left-radius: $radius-md;
+        border-bottom-left-radius: $radius-md;
+        border-right: 0;
+    }
+
+    // Last item
+    &:last-child {
+        border-top-right-radius: $radius-md;
+        border-bottom-right-radius: $radius-md;
+        border-left: 0;
+    }
+}
+
+// ==========================================================================
+// Form Validation Messages
+// ==========================================================================
+
+.invalid-feedback {
+    display: none;
+    width: 100%;
+    margin-top: $space-xs;
+    font-size: $font-size-sm;
+    color: $error-red;
+
+    .is-invalid ~ & {
+        display: block;
+    }
+}
+
+.valid-feedback {
+    display: none;
+    width: 100%;
+    margin-top: $space-xs;
+    font-size: $font-size-sm;
+    color: $success-green;
+
+    .is-valid ~ & {
+        display: block;
+    }
+}
+
+.form-text {
+    margin-top: $space-xs;
+    font-size: $font-size-sm;
+    color: $text-tertiary;
+}
+
+// ==========================================================================
+// Phone Number Input (WeInvite specific)
+// ==========================================================================
+
+.phone-input-group {
+    display: flex;
+    gap: $space-sm;
+
+    .country-code {
+        flex: 0 0 auto;
+        width: 100px;
+    }
+
+    .phone-number {
+        flex: 1;
+    }
+}
+
+// ==========================================================================
+// Date/Time Picker Styles
+// ==========================================================================
+
+.datetime-group {
+    display: flex;
+    gap: $space-sm;
+
+    .date-input,
+    .time-input {
+        flex: 1;
+    }
+}
+
+input[type="date"],
+input[type="time"] {
+    &::-webkit-calendar-picker-indicator {
+        cursor: pointer;
+        opacity: 0.6;
+
+        &:hover {
+            opacity: 1;
+        }
+    }
+}
+
+// ==========================================================================
+// Form Layouts
+// ==========================================================================
+
+// Horizontal form
+.form-horizontal {
+    @include md {
+        .form-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: $space-md;
+        }
+
+        .form-label {
+            flex: 0 0 200px;
+            margin-bottom: 0;
+            margin-right: $space-lg;
+        }
+
+        .form-control-wrapper {
+            flex: 1;
+        }
+    }
+}
+
+// Inline form
+.form-inline {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: $space-md;
+
+    .form-group {
+        margin-bottom: 0;
+        flex: 1;
+    }
+
+    .btn {
+        flex-shrink: 0;
+    }
+}
+
+// ==========================================================================
+// Search Form
+// ==========================================================================
+
+.search-form {
+    position: relative;
+
+    .search-input {
+        padding-right: 40px;
+    }
+
+    .search-icon {
+        position: absolute;
+        right: $space-md;
+        top: 50%;
+        transform: translateY(-50%);
+        color: $text-tertiary;
+        pointer-events: none;
+    }
+
+    .search-submit {
+        position: absolute;
+        right: $space-xs;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+}
+
+// ==========================================================================
+// Form Actions
+// ==========================================================================
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: $space-sm;
+    padding-top: $space-lg;
+    border-top: 1px solid $border-light;
+    margin-top: $space-xl;
+
+    &.form-actions-between {
+        justify-content: space-between;
+    }
+
+    &.form-actions-center {
+        justify-content: center;
+    }
+}

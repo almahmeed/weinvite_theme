@@ -1,0 +1,252 @@
+/**
+ * Landing Page Styles
+ * WeInvite Events Theme
+ *
+ * @package WeInvite_Theme
+ * @since 1.0.0
+ */
+
+// ==========================================================================
+// Hero Section
+// ==========================================================================
+
+.hero-landing {
+    padding: $space-4xl 0 $space-3xl;
+    background: linear-gradient(135deg, rgba($primary-purple-light, 0.05) 0%, rgba($primary-purple, 0.1) 100%);
+
+    @include max-md {
+        padding: $space-3xl 0 $space-2xl;
+    }
+
+    .hero-content {
+        margin-bottom: $space-xl;
+
+        @include md {
+            margin-bottom: 0;
+        }
+    }
+
+    .hero-title {
+        margin-bottom: $space-lg;
+    }
+
+    .hero-description {
+        margin-bottom: $space-xl;
+        color: $text-secondary;
+    }
+
+    .hero-actions {
+        display: flex;
+        gap: $space-md;
+        flex-wrap: wrap;
+        margin-bottom: $space-xl;
+
+        @include max-sm {
+            flex-direction: column;
+
+            .btn {
+                width: 100%;
+            }
+        }
+    }
+
+    .hero-stats {
+        display: flex;
+        gap: $space-xl;
+        flex-wrap: wrap;
+
+        @include max-md {
+            justify-content: center;
+        }
+
+        .stat-item {
+            text-align: center;
+
+            .stat-value {
+                font-size: $font-size-h3;
+                font-weight: $font-weight-bold;
+                color: $primary-purple;
+                margin-bottom: $space-xs;
+            }
+
+            .stat-label {
+                font-size: $font-size-sm;
+                color: $text-secondary;
+            }
+        }
+    }
+
+    .hero-image {
+        text-align: center;
+
+        img {
+            max-width: 100%;
+            height: auto;
+            animation: float 3s ease-in-out infinite;
+        }
+    }
+}
+
+// ==========================================================================
+// Features Section
+// ==========================================================================
+
+.section-features {
+    .feature-icon {
+        width: 64px;
+        height: 64px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba($primary-purple, 0.1);
+        border-radius: $radius-lg;
+        font-size: 32px;
+        margin-bottom: $space-md;
+    }
+
+    h3 {
+        margin-bottom: $space-sm;
+    }
+
+    p {
+        color: $text-secondary;
+    }
+}
+
+// ==========================================================================
+// How It Works Section
+// ==========================================================================
+
+.section-how-it-works {
+    .step-item {
+        padding: $space-lg;
+
+        .step-number {
+            width: 80px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: $gradient-primary;
+            color: $text-white;
+            font-size: $font-size-h2;
+            font-weight: $font-weight-bold;
+            border-radius: 50%;
+            margin: 0 auto $space-lg;
+        }
+
+        h3 {
+            margin-bottom: $space-md;
+        }
+
+        p {
+            color: $text-secondary;
+        }
+    }
+}
+
+// ==========================================================================
+// Testimonials Section
+// ==========================================================================
+
+.section-testimonials {
+    .testimonial-rating {
+        font-size: $font-size-lg;
+        margin-bottom: $space-md;
+    }
+
+    .testimonial-text {
+        font-style: italic;
+        color: $text-primary;
+        margin-bottom: $space-lg;
+        line-height: 1.8;
+    }
+
+    .testimonial-author {
+        strong {
+            display: block;
+            color: $text-primary;
+            margin-bottom: $space-xs;
+        }
+
+        small {
+            color: $text-secondary;
+            font-size: $font-size-sm;
+        }
+    }
+}
+
+// ==========================================================================
+// CTA Section
+// ==========================================================================
+
+.section-cta {
+    .cta-box {
+        background: $gradient-primary;
+        color: $text-white;
+        padding: $space-4xl $space-xl;
+        border-radius: $radius-xl;
+        box-shadow: $shadow-xl;
+
+        @include max-md {
+            padding: $space-3xl $space-lg;
+        }
+
+        h2 {
+            color: $text-white;
+            margin-bottom: $space-lg;
+        }
+
+        p {
+            opacity: 0.95;
+        }
+
+        .cta-actions {
+            margin-top: $space-xl;
+            display: flex;
+            gap: $space-md;
+            justify-content: center;
+            flex-wrap: wrap;
+
+            @include max-sm {
+                flex-direction: column;
+
+                .btn {
+                    width: 100%;
+                }
+            }
+
+            .btn-primary {
+                background: $white;
+                color: $primary-purple;
+                border-color: $white;
+
+                &:hover {
+                    background: darken($white, 5%);
+                }
+            }
+
+            .btn-outline-primary {
+                border-color: $white;
+                color: $white;
+
+                &:hover {
+                    background: rgba($white, 0.1);
+                }
+            }
+        }
+    }
+}
+
+// ==========================================================================
+// Animations
+// ==========================================================================
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-20px);
+    }
+}

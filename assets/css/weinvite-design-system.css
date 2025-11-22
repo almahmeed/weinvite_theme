@@ -1,0 +1,455 @@
+/**
+ * ============================================
+ * WEINVITE DESIGN SYSTEM - PHASE 7 PUBLIC EVENTS
+ * Generated: November 10, 2025
+ * Version: 1.0.0
+ * Sprint 3 Implementation
+ * ============================================
+ */
+
+:root {
+  /* -------------------- COLORS -------------------- */
+
+  /* Primary Purple Palette */
+  --color-primary: #6750A4;
+  --color-primary-light: #7B3FF2;
+  --color-primary-dark: #5A3D8F;
+  --color-primary-gradient: linear-gradient(135deg, #7B3FF2 0%, #9C27B0 100%);
+
+  /* Purple Shades */
+  --color-purple-50: #F5F0FF;
+  --color-purple-100: #EFE6FF;
+  --color-purple-200: #D6B5F5;
+  --color-purple-300: #9C27B0;
+  --color-purple-400: #7B3FF2;
+  --color-purple-500: #6750A4;
+  --color-purple-600: #5A3D8F;
+
+  /* Neutral Grays */
+  --color-gray-50: #FAFAFA;
+  --color-gray-100: #F5F5F5;
+  --color-gray-200: #E0E0E0;
+  --color-gray-300: #BDBDBD;
+  --color-gray-400: #9E9E9E;
+  --color-gray-500: #757575;
+  --color-gray-600: #616161;
+  --color-gray-700: #424242;
+  --color-gray-800: #303030;
+  --color-gray-900: #1C1C1C;
+
+  /* Semantic Colors */
+  --color-success: #10B981;
+  --color-success-light: #D1FAE5;
+  --color-success-dark: #059669;
+  --color-warning: #F59E0B;
+  --color-warning-light: #FEF3C7;
+  --color-warning-dark: #D97706;
+  --color-error: #EF4444;
+  --color-error-light: #FEE2E2;
+  --color-error-dark: #DC2626;
+  --color-info: #3B82F6;
+  --color-info-light: #DBEAFE;
+  --color-info-dark: #2563EB;
+
+  /* Gradients */
+  --gradient-primary: linear-gradient(135deg, #7B3FF2 0%, #9C27B0 100%);
+  --gradient-success: linear-gradient(135deg, #10B981 0%, #059669 100%);
+  --gradient-warning: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+  --gradient-error: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
+  --gradient-gray: linear-gradient(135deg, #757575 0%, #424242 100%);
+
+  /* Background Colors */
+  --color-bg-primary: #FFFFFF;
+  --color-bg-secondary: #FAFAFA;
+  --color-bg-tertiary: #F5F5F5;
+  --color-bg-overlay: rgba(0, 0, 0, 0.5);
+  --color-bg-overlay-dark: rgba(0, 0, 0, 0.75);
+
+  /* Text Colors */
+  --color-text-primary: #1C1C1C;
+  --color-text-secondary: #616161;
+  --color-text-tertiary: #9E9E9E;
+  --color-text-inverse: #FFFFFF;
+  --color-text-link: #7B3FF2;
+  --color-text-link-hover: #6750A4;
+
+  /* Border Colors */
+  --color-border-light: #E0E0E0;
+  --color-border-medium: #BDBDBD;
+  --color-border-dark: #9E9E9E;
+
+  /* -------------------- TYPOGRAPHY -------------------- */
+
+  /* Font Families */
+  --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-display: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', sans-serif;
+
+  /* Desktop Font Sizes */
+  --font-size-h1: 48px;
+  --font-size-h2: 32px;
+  --font-size-h3: 24px;
+  --font-size-h4: 20px;
+  --font-size-body-large: 18px;
+  --font-size-body: 16px;
+  --font-size-body-small: 14px;
+  --font-size-caption: 12px;
+
+  /* Font Weights */
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  /* Line Heights */
+  --line-height-tight: 1.2;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.75;
+
+  /* Letter Spacing */
+  --letter-spacing-tight: -0.02em;
+  --letter-spacing-normal: 0;
+  --letter-spacing-wide: 0.02em;
+
+  /* -------------------- SPACING -------------------- */
+
+  /* Base 8px Grid System */
+  --spacing-0: 0;
+  --spacing-1: 8px;    /* 0.5rem */
+  --spacing-2: 16px;   /* 1rem */
+  --spacing-3: 24px;   /* 1.5rem */
+  --spacing-4: 32px;   /* 2rem */
+  --spacing-5: 40px;   /* 2.5rem */
+  --spacing-6: 48px;   /* 3rem */
+  --spacing-8: 64px;   /* 4rem */
+  --spacing-10: 80px;  /* 5rem */
+  --spacing-12: 96px;  /* 6rem */
+  --spacing-16: 128px; /* 8rem */
+
+  /* -------------------- BORDER RADIUS -------------------- */
+
+  --radius-none: 0;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  --radius-2xl: 24px;
+  --radius-full: 9999px;
+
+  /* -------------------- SHADOWS -------------------- */
+
+  --shadow-none: none;
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+
+  /* -------------------- Z-INDEX -------------------- */
+
+  --z-base: 1;
+  --z-dropdown: 100;
+  --z-sticky: 200;
+  --z-fixed: 300;
+  --z-modal-backdrop: 900;
+  --z-modal: 1000;
+  --z-toast: 1100;
+  --z-tooltip: 1200;
+
+  /* -------------------- TRANSITIONS -------------------- */
+
+  --transition-fast: 150ms ease-in-out;
+  --transition-base: 300ms ease-in-out;
+  --transition-slow: 500ms ease-in-out;
+  --transition-slowest: 700ms ease-in-out;
+
+  /* Easing Functions */
+  --ease-in: cubic-bezier(0.4, 0, 1, 1);
+  --ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-elastic: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+  /* -------------------- BREAKPOINTS -------------------- */
+
+  --breakpoint-mobile: 375px;
+  --breakpoint-mobile-lg: 480px;
+  --breakpoint-tablet: 768px;
+  --breakpoint-tablet-lg: 1024px;
+  --breakpoint-desktop: 1280px;
+  --breakpoint-desktop-lg: 1440px;
+  --breakpoint-wide: 1920px;
+
+  /* -------------------- LAYOUT -------------------- */
+
+  --container-max-width: 1200px;
+  --content-max-width: 800px;
+  --sidebar-width: 400px;
+
+  /* -------------------- BORDERS -------------------- */
+
+  --border-width-thin: 1px;
+  --border-width-medium: 2px;
+  --border-width-thick: 4px;
+
+  /* -------------------- ANIMATIONS -------------------- */
+
+  --animation-reveal-pulse: revealPulse 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  --animation-success-bounce: successBounce 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  --animation-shake: shake 0.3s ease-in-out;
+  --animation-fade-in: fadeIn 0.3s ease-in-out;
+  --animation-slide-up: slideUp 0.3s ease-out;
+  --animation-slide-down: slideDown 0.3s ease-out;
+}
+
+/* -------------------- MOBILE OVERRIDES -------------------- */
+
+@media (max-width: 767px) {
+  :root {
+    /* Mobile Font Sizes */
+    --font-size-h1: 28px;
+    --font-size-h2: 22px;
+    --font-size-h3: 18px;
+    --font-size-h4: 16px;
+    --font-size-body-large: 16px;
+    --font-size-body: 14px;
+    --font-size-body-small: 12px;
+    --font-size-caption: 11px;
+
+    /* Mobile Spacing (Reduced) */
+    --spacing-3: 20px;
+    --spacing-4: 24px;
+    --spacing-5: 32px;
+    --spacing-6: 40px;
+    --spacing-8: 48px;
+    --spacing-10: 64px;
+    --spacing-12: 80px;
+  }
+}
+
+/* -------------------- KEYFRAME ANIMATIONS -------------------- */
+
+@keyframes revealPulse {
+  0% {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  50% {
+    transform: scale(1.02);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes successBounce {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-8px);
+  }
+  75% {
+    transform: translateX(8px);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* -------------------- UTILITY CLASSES -------------------- */
+
+/* Text Gradient */
+.text-gradient {
+  background: var(--color-primary-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Container */
+.container {
+  width: 100%;
+  max-width: var(--container-max-width);
+  margin: 0 auto;
+  padding: 0 var(--spacing-2);
+}
+
+@media (min-width: 768px) {
+  .container {
+    padding: 0 var(--spacing-4);
+  }
+}
+
+/* Screen Reader Only */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Focus Visible */
+*:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* Remove Default Button Styles */
+button {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  color: inherit;
+  margin: 0;
+  overflow: visible;
+  text-transform: none;
+  -webkit-appearance: button;
+  cursor: pointer;
+}
+
+/* Remove Default Input Styles */
+input,
+textarea,
+select {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  margin: 0;
+}
+
+/* Smooth Scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Box Sizing */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Body Defaults */
+body {
+  font-family: var(--font-primary);
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-normal);
+  color: var(--color-text-primary);
+  background-color: var(--color-bg-primary);
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Typography Defaults */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-tight);
+  margin: 0;
+  color: var(--color-text-primary);
+}
+
+h1 {
+  font-size: var(--font-size-h1);
+}
+
+h2 {
+  font-size: var(--font-size-h2);
+}
+
+h3 {
+  font-size: var(--font-size-h3);
+}
+
+h4 {
+  font-size: var(--font-size-h4);
+}
+
+p {
+  margin: 0 0 var(--spacing-2) 0;
+}
+
+a {
+  color: var(--color-text-link);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+a:hover {
+  color: var(--color-text-link-hover);
+}
+
+/* Image Defaults */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* List Defaults */
+ul, ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* -------------------- END OF DESIGN SYSTEM -------------------- */

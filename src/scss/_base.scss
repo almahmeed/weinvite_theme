@@ -1,0 +1,242 @@
+/**
+ * Base Styles & CSS Reset
+ * WeInvite Events Theme
+ *
+ * @package WeInvite_Theme
+ * @since 1.0.0
+ */
+
+// ==========================================================================
+// CSS RESET (Modern Normalize)
+// ==========================================================================
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-size: $font-size-base;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+}
+
+body {
+    @include body-text;
+    background: $bg-primary;
+    overflow-x: hidden;
+    min-height: 100vh;
+}
+
+// ==========================================================================
+// GLOBAL ELEMENTS
+// ==========================================================================
+
+// Links
+a {
+    color: $primary-purple;
+    text-decoration: none;
+    transition: $transition-color;
+
+    &:hover {
+        color: $primary-purple-dark;
+        text-decoration: underline;
+    }
+
+    &:focus {
+        outline: 2px solid $primary-purple;
+        outline-offset: 2px;
+    }
+}
+
+// Images
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+// Lists
+ul, ol {
+    list-style: none;
+}
+
+// Buttons (reset)
+button {
+    background: none;
+    border: none;
+    font-family: inherit;
+    cursor: pointer;
+
+    &:focus {
+        outline: 2px solid $primary-purple;
+        outline-offset: 2px;
+    }
+}
+
+// Input (reset)
+input,
+textarea,
+select {
+    font-family: inherit;
+    font-size: inherit;
+}
+
+// Tables
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+// ==========================================================================
+// UTILITY CLASSES
+// ==========================================================================
+
+// Screen Reader Only
+.sr-only,
+.screen-reader-text {
+    @include visually-hidden;
+}
+
+// Skip to Content Link
+.skip-link {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    background: $primary-purple;
+    color: $text-white;
+    padding: $space-sm $space-md;
+    z-index: 100;
+
+    &:focus {
+        top: 0;
+    }
+}
+
+// ==========================================================================
+// WORDPRESS SPECIFIC
+// ==========================================================================
+
+// Alignments
+.alignleft {
+    float: left;
+    margin-right: $space-lg;
+    margin-bottom: $space-md;
+}
+
+.alignright {
+    float: right;
+    margin-left: $space-lg;
+    margin-bottom: $space-md;
+}
+
+.aligncenter {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: $space-md;
+}
+
+.alignwide {
+    max-width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.alignfull {
+    max-width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+// WordPress Captions
+.wp-caption {
+    max-width: 100%;
+
+    .wp-caption-text {
+        font-size: $font-size-small;
+        color: $text-secondary;
+        margin-top: $space-xs;
+        text-align: center;
+    }
+}
+
+// WordPress Galleries
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: $space-md;
+    margin-bottom: $space-lg;
+}
+
+// Sticky Posts
+.sticky {
+    // Add sticky post styles if needed
+}
+
+// ==========================================================================
+// HELPER CLASSES
+// ==========================================================================
+
+// Text Alignment
+.text-left { text-align: left; }
+.text-center { text-align: center; }
+.text-right { text-align: right; }
+
+// Display
+.d-none { display: none; }
+.d-block { display: block; }
+.d-inline { display: inline; }
+.d-inline-block { display: inline-block; }
+.d-flex { display: flex; }
+
+// Spacing
+.mt-0 { margin-top: 0; }
+.mt-1 { margin-top: $space-sm; }
+.mt-2 { margin-top: $space-md; }
+.mt-3 { margin-top: $space-lg; }
+.mt-4 { margin-top: $space-xl; }
+
+.mb-0 { margin-bottom: 0; }
+.mb-1 { margin-bottom: $space-sm; }
+.mb-2 { margin-bottom: $space-md; }
+.mb-3 { margin-bottom: $space-lg; }
+.mb-4 { margin-bottom: $space-xl; }
+
+.pt-1 { padding-top: $space-sm; }
+.pt-2 { padding-top: $space-md; }
+.pt-3 { padding-top: $space-lg; }
+.pt-4 { padding-top: $space-xl; }
+
+.pb-1 { padding-bottom: $space-sm; }
+.pb-2 { padding-bottom: $space-md; }
+.pb-3 { padding-bottom: $space-lg; }
+.pb-4 { padding-bottom: $space-xl; }
+
+// Colors
+.text-primary { color: $text-primary; }
+.text-secondary { color: $text-secondary; }
+.text-white { color: $text-white; }
+.text-success { color: $success-green; }
+.text-warning { color: $warning-orange; }
+.text-danger { color: $error-red; }
+
+// Background
+.bg-primary { background: $bg-primary; }
+.bg-secondary { background: $bg-secondary; }
+.bg-dark { background: $bg-dark; }
+
+// Shadows
+.shadow-sm { box-shadow: $shadow-sm; }
+.shadow-md { box-shadow: $shadow-md; }
+.shadow-lg { box-shadow: $shadow-lg; }
+
+// Border Radius
+.rounded-sm { border-radius: $border-radius-sm; }
+.rounded { border-radius: $border-radius-md; }
+.rounded-lg { border-radius: $border-radius-lg; }
+.rounded-full { border-radius: $border-radius-round; }

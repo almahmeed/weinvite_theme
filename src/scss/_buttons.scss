@@ -1,0 +1,320 @@
+/**
+ * Button Components
+ * WeInvite Events Theme
+ *
+ * @package WeInvite_Theme
+ * @since 1.0.0
+ */
+
+// ==========================================================================
+// BASE BUTTON
+// ==========================================================================
+
+.btn {
+    @include button-base;
+
+    // Icon spacing
+    .icon {
+        font-size: 1.2em;
+    }
+
+    &.btn-icon-left .icon {
+        margin-right: $space-xs;
+    }
+
+    &.btn-icon-right .icon {
+        margin-left: $space-xs;
+    }
+}
+
+// ==========================================================================
+// BUTTON VARIANTS
+// ==========================================================================
+
+// Primary Button
+.btn-primary {
+    background: $gradient-primary;
+    color: $text-white;
+    border-color: transparent;
+
+    &:hover {
+        background: $primary-purple-dark;
+        color: $text-white;
+        text-decoration: none;
+    }
+
+    &:focus {
+        box-shadow: $shadow-focus;
+    }
+}
+
+// Secondary Button
+.btn-secondary {
+    background: $bg-secondary;
+    color: $text-primary;
+    border-color: $border-light;
+
+    &:hover {
+        background: $light-gray;
+        text-decoration: none;
+    }
+}
+
+// Outline Button
+.btn-outline {
+    background: transparent;
+    color: $primary-purple;
+    border-color: $primary-purple;
+
+    &:hover {
+        background: $primary-purple;
+        color: $text-white;
+        text-decoration: none;
+    }
+}
+
+// Success Button
+.btn-success {
+    background: $success-green;
+    color: $text-white;
+    border-color: transparent;
+
+    &:hover {
+        background: darken($success-green, 10%);
+        text-decoration: none;
+    }
+}
+
+// Warning Button
+.btn-warning {
+    background: $warning-orange;
+    color: $text-white;
+    border-color: transparent;
+
+    &:hover {
+        background: darken($warning-orange, 10%);
+        text-decoration: none;
+    }
+}
+
+// Danger Button
+.btn-danger {
+    background: $error-red;
+    color: $text-white;
+    border-color: transparent;
+
+    &:hover {
+        background: darken($error-red, 10%);
+        text-decoration: none;
+    }
+}
+
+// Link Button (looks like a link)
+.btn-link {
+    background: transparent;
+    color: $primary-purple;
+    border-color: transparent;
+    padding: 0;
+
+    &:hover {
+        color: $primary-purple-dark;
+        text-decoration: underline;
+        transform: none;
+        box-shadow: none;
+    }
+}
+
+// ==========================================================================
+// BUTTON SIZES
+// ==========================================================================
+
+.btn-sm {
+    padding: $space-xs $space-md;
+    font-size: $font-size-small;
+}
+
+.btn-lg {
+    padding: $space-md $space-xl;
+    font-size: $font-size-large;
+}
+
+// ==========================================================================
+// BUTTON STATES
+// ==========================================================================
+
+// Icon Only Button
+.btn-icon {
+    padding: $space-sm;
+    width: 40px;
+    height: 40px;
+    border-radius: $border-radius-round;
+
+    &.btn-icon-sm {
+        width: 32px;
+        height: 32px;
+        padding: $space-xs;
+    }
+
+    &.btn-icon-lg {
+        width: 48px;
+        height: 48px;
+        padding: $space-md;
+    }
+}
+
+// Loading State
+.btn-loading {
+    position: relative;
+    pointer-events: none;
+    color: transparent;
+
+    &::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 16px;
+        height: 16px;
+        border: 2px solid currentColor;
+        border-right-color: transparent;
+        border-radius: 50%;
+        animation: spin 0.6s linear infinite;
+    }
+
+    // Show white spinner on colored backgrounds
+    &.btn-primary::after,
+    &.btn-success::after,
+    &.btn-warning::after,
+    &.btn-danger::after {
+        border-color: $text-white;
+        border-right-color: transparent;
+    }
+}
+
+@keyframes spin {
+    to {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+
+// Disabled State
+.btn:disabled,
+.btn.disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+// ==========================================================================
+// BUTTON GROUPS
+// ==========================================================================
+
+.btn-group {
+    display: inline-flex;
+    gap: $space-sm;
+
+    .btn {
+        flex: 0 0 auto;
+    }
+
+    &.btn-group-block {
+        display: flex;
+        width: 100%;
+
+        .btn {
+            flex: 1 1 0%;
+        }
+    }
+}
+
+// ==========================================================================
+// BLOCK BUTTON
+// ==========================================================================
+
+.btn-block {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+}
+
+// ==========================================================================
+// BUTTON WITH BADGE
+// ==========================================================================
+
+.btn-with-badge {
+    position: relative;
+
+    .badge {
+        position: absolute;
+        top: -8px;
+        right: -8px;
+        min-width: 20px;
+        height: 20px;
+        padding: 0 6px;
+        font-size: $font-size-tiny;
+        line-height: 20px;
+        border-radius: $border-radius-pill;
+    }
+}
+
+// ==========================================================================
+// CLOSE BUTTON
+// ==========================================================================
+
+.btn-close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    border: none;
+    background: transparent;
+    border-radius: $border-radius-round;
+    cursor: pointer;
+    transition: $transition-bg;
+    color: $text-primary;
+
+    &:hover {
+        background: $bg-secondary;
+        transform: none;
+        box-shadow: none;
+    }
+
+    &::before,
+    &::after {
+        content: "";
+        position: absolute;
+        width: 16px;
+        height: 2px;
+        background: currentColor;
+    }
+
+    &::before {
+        transform: rotate(45deg);
+    }
+
+    &::after {
+        transform: rotate(-45deg);
+    }
+}
+
+// ==========================================================================
+// FLOATING ACTION BUTTON
+// ==========================================================================
+
+.btn-fab {
+    position: fixed;
+    bottom: $space-xl;
+    right: $space-xl;
+    width: 56px;
+    height: 56px;
+    border-radius: $border-radius-round;
+    box-shadow: $shadow-lg;
+    z-index: $z-index-fixed;
+
+    &:hover {
+        box-shadow: $shadow-xl;
+    }
+}
