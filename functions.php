@@ -317,20 +317,38 @@ add_action( 'wp_ajax_nopriv_weinvite_contact_form', 'weinvite_handle_contact_for
  * URL formats:
  *   - weinvite.com/event/{TOKEN} (SEO-friendly, descriptive)
  *   - weinvite.com/e/{TOKEN} (short URL for sharing)
- * Token format: 8-character alphanumeric (e.g., abc123d4 or 0C35A7AA)
- * Sprint 5 - Phase 7: Both paths required for deep linking
+ * Token formats:
+ *   - Production: 8-character uppercase alphanumeric (e.g., 0C35A7AA, ABC123D4)
+ *   - Test: pub_ prefix + 24 lowercase hex characters (e.g., pub_09f74fadf915c7217448f696)
+ * Sprint 5 - Phase 7: Support both formats during testing phase
  */
 function weinvite_public_event_rewrite_rules() {
+    // PRODUCTION FORMAT: 8-character uppercase alphanumeric tokens
     // Long URL: /event/{TOKEN} (SEO-friendly)
     add_rewrite_rule(
-        '^event/([a-zA-Z0-9]{8})/?$',
+        '^event/([A-Z0-9]{8})/?$',
         'index.php?weinvite_public_event=$matches[1]',
         'top'
     );
 
     // Short URL: /e/{TOKEN} (for sharing)
     add_rewrite_rule(
-        '^e/([a-zA-Z0-9]{8})/?$',
+        '^e/([A-Z0-9]{8})/?$',
+        'index.php?weinvite_public_event=$matches[1]',
+        'top'
+    );
+
+    // TEST FORMAT: pub_ prefix + 24 hex characters
+    // Long URL: /event/{TOKEN}
+    add_rewrite_rule(
+        '^event/(pub_[a-f0-9]{24})/?$',
+        'index.php?weinvite_public_event=$matches[1]',
+        'top'
+    );
+
+    // Short URL: /e/{TOKEN}
+    add_rewrite_rule(
+        '^e/(pub_[a-f0-9]{24})/?$',
         'index.php?weinvite_public_event=$matches[1]',
         'top'
     );
@@ -353,8 +371,13 @@ function weinvite_public_event_template_redirect() {
     $event_token = get_query_var( 'weinvite_public_event' );
 
     if ( $event_token ) {
-        // Validate token format (8-char alphanumeric - case insensitive)
-        if ( ! preg_match( '/^[a-zA-Z0-9]{8}$/', $event_token ) ) {
+        // Validate token format - Support both production and test formats
+        // Production: 8-character uppercase alphanumeric (e.g., 0C35A7AA)
+        // Test: pub_ + 24 lowercase hex characters (e.g., pub_09f74fadf915c7217448f696)
+        $is_production_format = preg_match( '/^[A-Z0-9]{8}$/', $event_token );
+        $is_test_format = preg_match( '/^pub_[a-f0-9]{24}$/', $event_token );
+
+        if ( ! $is_production_format && ! $is_test_format ) {
             wp_die(
                 '<h1>Invalid Event Link</h1><p>The event link you followed is not valid. Please check the URL and try again.</p>',
                 'Invalid Event Link',
