@@ -160,7 +160,7 @@
    */
   async function fetchEventData(token) {
     try {
-      const apiEndpoint = `${API_URL}events/${token}`;
+      const apiEndpoint = `${API_URL}events/public/${token}`;
       console.log('Fetching event from:', apiEndpoint);
 
       const response = await fetch(apiEndpoint);
