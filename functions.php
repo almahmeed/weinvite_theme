@@ -377,8 +377,6 @@ function weinvite_public_event_template_redirect() {
         $is_production_format = preg_match( '/^[A-Z0-9]{8}$/', $event_token );
         $is_test_format = preg_match( '/^pub_[a-f0-9]{24}$/', $event_token );
 
-        // TEMPORARILY DISABLED FOR DEBUGGING - REMOVE THIS COMMENT AFTER FIXING
-        /*
         if ( ! $is_production_format && ! $is_test_format ) {
             wp_die(
                 '<h1>Invalid Event Link</h1><p>The event link you followed is not valid. Please check the URL and try again.</p>',
@@ -386,7 +384,6 @@ function weinvite_public_event_template_redirect() {
                 array( 'response' => 400 )
             );
         }
-        */
 
         // Load the public event template
         $template = locate_template( 'template-public-event.php' );
