@@ -223,7 +223,7 @@
     const hasRsvpd = window.WeInviteRSVPStatus === 'confirmed';
 
     // Check if event is full
-    const capacity = event.capacity || event.rsvp_settings?.invite_limit || 100;
+    const capacity = event.capacity_limit || event.rsvp_settings?.invite_limit || 100;
     const rsvpCount = event.rsvp_count || 0;
     const isFull = rsvpCount >= capacity;
 
@@ -385,7 +385,7 @@
     const timeFormatted = formatTime(event.time);
 
     // Calculate capacity (use defaults if not provided)
-    const capacity = event.capacity || event.rsvp_settings?.invite_limit || 100;
+    const capacity = event.capacity_limit || event.rsvp_settings?.invite_limit || 100;
     const rsvpCount = event.rsvp_count || 0;
     const spotsAvailable = capacity - rsvpCount;
     const capacityPercent = Math.round((rsvpCount / capacity) * 100);
@@ -661,7 +661,7 @@
    */
   function renderRSVPCard(event) {
     // Calculate capacity (use defaults if not provided)
-    const capacity = event.capacity || event.rsvp_settings?.invite_limit || 100;
+    const capacity = event.capacity_limit || event.rsvp_settings?.invite_limit || 100;
     const rsvpCount = event.rsvp_count || 0;
     const spotsAvailable = capacity - rsvpCount;
     const capacityPercent = Math.round((rsvpCount / capacity) * 100);
@@ -849,7 +849,7 @@
    */
   function renderWaitlistCard(event) {
     // Calculate capacity
-    const capacity = event.capacity || event.rsvp_settings?.invite_limit || 100;
+    const capacity = event.capacity_limit || event.rsvp_settings?.invite_limit || 100;
     const rsvpCount = event.rsvp_count || 0;
 
     // Get waitlist data from BEDEV's API response
