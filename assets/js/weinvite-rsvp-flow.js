@@ -4,7 +4,7 @@
  * Phase 7: Sprint 3 Implementation
  * November 10, 2025
  * Version: 1.0.0
- * DEBUG VERSION: 2025-11-25-BUG013-FIX-V3-GLOBAL-ONCLICK
+ * DEBUG VERSION: 2025-11-25-BUG013-FIX-V4-EARLY-REGISTER
  * ============================================
  */
 
@@ -80,6 +80,20 @@
    *
    * ==========================================
    */
+
+  // REGISTER GLOBAL FUNCTION IMMEDIATELY (before DOM loads)
+  window.WeInviteSubmitRSVP = async function() {
+    console.log('[MOBILE DEBUG] 🎯 GLOBAL FUNCTION CALLED: WeInviteSubmitRSVP');
+
+    const fakeEvent = {
+      preventDefault: () => {},
+      stopPropagation: () => {},
+      target: document.getElementById('rsvp-form')
+    };
+
+    await handleRSVPFormSubmit(fakeEvent);
+  };
+  console.log('[MOBILE DEBUG] ✅ Global WeInviteSubmitRSVP registered EARLY');
 
   // Page load initialization
   document.addEventListener('DOMContentLoaded', function() {
@@ -1242,24 +1256,6 @@
       console.log('[MOBILE DEBUG] Button restored after error');
     }
   }
-
-  /**
-   * GLOBAL WRAPPER: Expose submit function to window for onclick handler
-   * This solves the scope issue where event listeners can't access the function
-   */
-  window.WeInviteSubmitRSVP = async function() {
-    console.log('[MOBILE DEBUG] 🎯 GLOBAL FUNCTION CALLED: WeInviteSubmitRSVP');
-
-    const fakeEvent = {
-      preventDefault: () => {},
-      stopPropagation: () => {},
-      target: document.getElementById('rsvp-form')
-    };
-
-    await handleRSVPFormSubmit(fakeEvent);
-  };
-
-  console.log('[MOBILE DEBUG] ✅ Global WeInviteSubmitRSVP function registered on window');
 
   /**
    * Request OTP from API
