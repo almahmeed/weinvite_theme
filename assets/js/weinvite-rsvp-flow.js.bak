@@ -91,6 +91,7 @@
     const hasRsvpSession = sessionStorage.getItem('weinvite_rsvp_confirmed') === 'true';
     const sessionEventToken = sessionStorage.getItem('weinvite_event_token');
 
+    console.log('[MOBILE DEBUG] SessionStorage check:', {
       hasRsvpSession,
       sessionEventToken,
       currentEventToken: EVENT_TOKEN,
@@ -99,6 +100,8 @@
 
     // Set global flag if user has RSVP'd to THIS event
     if (hasRsvpSession && sessionEventToken === EVENT_TOKEN) {
+      console.log('[MOBILE DEBUG] User has already RSVP\'d to this event (session storage)');
+      console.log('[MOBILE DEBUG] Setting WeInviteRSVPStatus = confirmed');
       window.WeInviteRSVPStatus = 'confirmed';
       window.WeInviteRSVPCode = sessionStorage.getItem('weinvite_rsvp_code') || '';
     }
@@ -255,6 +258,7 @@
     }
 
     // Render right column (BUG #011 FIX: Show confirmation if RSVP'd)
+    console.log('[MOBILE DEBUG] Rendering decision:', {
       hasRsvpd,
       isFull,
       rsvpCount,
@@ -263,10 +267,13 @@
     });
 
     if (hasRsvpd) {
+      console.log('[MOBILE DEBUG] Rendering CONFIRMATION card (user already RSVP\'d)');
       renderConfirmationCard(event);
     } else if (isFull) {
+      console.log('[MOBILE DEBUG] Rendering WAITLIST card (event is full)');
       renderWaitlistCard(event);
     } else {
+      console.log('[MOBILE DEBUG] Rendering RSVP card (normal flow)');
       renderRSVPCard(event);
     }
 
@@ -674,6 +681,7 @@
    * Render RSVP card (right sidebar)
    */
   function renderRSVPCard(event) {
+    console.log('[MOBILE DEBUG] renderRSVPCard function called with event:', event);
 
     // Calculate capacity (use defaults if not provided)
     const capacity = event.capacity_limit || event.rsvp_settings?.invite_limit || 100;
@@ -683,6 +691,7 @@
 
     // Check if host wants to show capacity numbers
     const showCapacity = event.show_capacity !== false;
+    console.log('[MOBILE DEBUG] Capacity calculations:', { capacity, rsvpCount, spotsAvailable, showCapacity });
 
     const rsvpHTML = `
       <!-- Response Card Header (BUG #003 FIX) -->
@@ -1230,6 +1239,7 @@
       // Restore button
       submitButton.disabled = false;
       submitButton.textContent = originalButtonText;
+      console.log('[MOBILE DEBUG] Button restored after error');
     }
   }
 
@@ -1238,6 +1248,9 @@
    */
   async function requestOTP(phone, eventToken, guestName, plusOnes) {
     const apiEndpoint = `${API_URL}rsvp/request-otp`;
+    console.log('[MOBILE DEBUG] requestOTP function started');
+    console.log('[MOBILE DEBUG] API endpoint:', apiEndpoint);
+    console.log('[MOBILE DEBUG] Request params:', { phone, eventToken, guestName });
 
     try {
       const response = await fetch(apiEndpoint, {
@@ -1252,14 +1265,18 @@
         })
       });
 
+      console.log('[MOBILE DEBUG] Fetch completed, response status:', response.status, response.ok);
 
       const data = await response.json();
+      console.log('[MOBILE DEBUG] Response data:', data);
 
       if (!response.ok || !data.success) {
         const errorMessage = data.message || 'Failed to send verification code';
-        console.error('API returned error:', errorMessage);
+        console.error('[MOBILE DEBUG] API returned error:', errorMessage);
         throw new Error(errorMessage);
       }
+
+      console.log('[MOBILE DEBUG] OTP requested successfully:', data);
 
       // Log test OTP if in test mode
       if (data.test_mode && data.otp_for_testing) {
@@ -1271,7 +1288,7 @@
 
       return data;
     } catch (fetchError) {
-      console.error('Fetch error in requestOTP:', fetchError);
+      console.error('[MOBILE DEBUG] Fetch error in requestOTP:', fetchError);
       throw fetchError;
     }
   }
@@ -1280,6 +1297,9 @@
    * Show OTP modal
    */
   function showOTPModal(phone, guestName, plusOnes, otpResponse, isWaitlist = false) {
+    console.log('[MOBILE DEBUG] showOTPModal function started');
+    console.log('[MOBILE DEBUG] Parameters:', { phone: phone ? 'present' : 'missing', guestName, plusOnes, isWaitlist });
+    console.log('[MOBILE DEBUG] otpResponse:', otpResponse);
 
     // Store context for verification
     window.WeInviteOTPContext = {
@@ -1288,24 +1308,30 @@
       plusOnes: plusOnes || 0,
       isWaitlist: isWaitlist
     };
+    console.log('[MOBILE DEBUG] OTP context stored in window');
 
     // Check if modal already exists
     let modal = document.getElementById('otp-modal');
+    console.log('[MOBILE DEBUG] Existing modal element:', modal ? 'found' : 'not found');
 
     if (!modal) {
       // Create modal
+      console.log('[MOBILE DEBUG] Creating new modal element');
       modal = document.createElement('div');
       modal.id = 'otp-modal';
       modal.className = 'modal';
       document.body.appendChild(modal);
+      console.log('[MOBILE DEBUG] Modal element created and appended to body');
     }
 
     // Format phone for display (show last 4 digits)
     const maskedPhone = phone.replace(/(\+\d{1,3})\d+(\d{4})/, '$1***$2');
+    console.log('[MOBILE DEBUG] Masked phone:', maskedPhone);
 
     // Check if test mode and get OTP
     const testMode = otpResponse && otpResponse.test_mode;
     const testOTP = testMode ? otpResponse.otp_for_testing : null;
+    console.log('[MOBILE DEBUG] Test mode:', testMode, 'Test OTP:', testOTP ? 'present' : 'not present');
 
     // Button text depends on context
     const buttonText = isWaitlist ? 'Join Waitlist' : 'Verify & Complete RSVP';
@@ -1367,11 +1393,15 @@
     `;
 
     // Show modal
+    console.log('[MOBILE DEBUG] Setting modal display to flex...');
     modal.style.display = 'flex';
     document.body.style.overflow = 'hidden';
+    console.log('[MOBILE DEBUG] Modal displayed! body overflow set to hidden');
 
     // Initialize OTP input handlers
+    console.log('[MOBILE DEBUG] Initializing OTP input handlers...');
     initOTPInput();
+    console.log('[MOBILE DEBUG] showOTPModal function completed successfully!');
 
     // Start countdown
     startResendCountdown(60);
