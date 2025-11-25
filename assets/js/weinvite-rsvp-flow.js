@@ -4,7 +4,7 @@
  * Phase 7: Sprint 3 Implementation
  * November 10, 2025
  * Version: 1.0.0
- * DEBUG VERSION: 2025-11-25-BUG013-FIX-V9-TRACE-ALL-EXITS
+ * DEBUG VERSION: 2025-11-25-BUG013-FIX-V10-DEBUG-PHONE-INPUT
  * ============================================
  */
 
@@ -17,7 +17,7 @@
   const EVENT_TOKEN = config.eventToken || '';
   const NONCE = config.nonce || '';
 
-  console.log('🔧 WeInvite RSVP Flow initialized - DEBUG VERSION: 2025-11-25-BUG013-FIX-V3-GLOBAL-ONCLICK', {
+  console.log('🔧 WeInvite RSVP Flow initialized - DEBUG VERSION: 2025-11-25-BUG013-FIX-V10-DEBUG-PHONE-INPUT', {
     apiUrl: API_URL,
     eventToken: EVENT_TOKEN,
     debugMode: true,
@@ -1180,13 +1180,21 @@
       return;
     }
 
+    // Debug: Check what we're getting from the phone input
+    alert('DEBUG: phoneInput.value = "' + phoneInput.value + '"');
+    alert('DEBUG: phoneInput.value.length = ' + phoneInput.value.length);
+
     const phone = phoneInput.value.trim();
     const plusOnes = parseInt(plusOnesSelect.value);
+
+    alert('DEBUG: After trim, phone = "' + phone + '"');
+    alert('DEBUG: After trim, phone.length = ' + phone.length);
+
     console.log('[MOBILE DEBUG] Form values:', { phone: phone ? 'present' : 'empty', plusOnes });
 
     // Validate phone number (BUG #005 & #006 FIX)
     if (phone === '') {
-      alert('EARLY EXIT 3: Phone is blank!');
+      alert('EARLY EXIT 3: Phone is blank! Input was: "' + phoneInput.value + '"');
       showFormError(phoneInput, 'Phone Number cannot be blank');
       return;
     }
