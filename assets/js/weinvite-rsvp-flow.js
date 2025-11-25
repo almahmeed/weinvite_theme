@@ -4,7 +4,7 @@
  * Phase 7: Sprint 3 Implementation
  * November 10, 2025
  * Version: 1.0.0
- * DEBUG VERSION: 2025-11-25-BUG013-FIX-V7-BUTTON-FIX
+ * DEBUG VERSION: 2025-11-25-BUG013-FIX-V8-TRACE-BEFORE-TRY
  * ============================================
  */
 
@@ -772,7 +772,7 @@
         </div>
 
         <!-- Submit Button -->
-        <button type="button" class="btn btn-primary btn-block" id="rsvp-submit-btn" onclick="alert('V7 CODE - BUTTON FIX!'); window.WeInviteSubmitRSVP && window.WeInviteSubmitRSVP()">
+        <button type="button" class="btn btn-primary btn-block" id="rsvp-submit-btn" onclick="alert('V8 - TRACE BEFORE TRY'); window.WeInviteSubmitRSVP && window.WeInviteSubmitRSVP()">
           Get Verification Code
         </button>
       </form>
@@ -1239,11 +1239,15 @@
     // Get guest name (for now, use placeholder - can be enhanced later)
     const guestName = 'Guest'; // TODO: Add name input field
 
+    alert('BEFORE TRY BLOCK: About to disable button and call API');
+
     // Show loading state
     const originalButtonText = submitButton.textContent;
     submitButton.disabled = true;
     submitButton.innerHTML = '<span class="spinner"></span> Sending Code...';
     console.log('[MOBILE DEBUG] Button disabled, calling requestOTP...');
+
+    alert('INSIDE TRY BLOCK: Button disabled, now calling requestOTP');
 
     try {
       // Call request OTP API
