@@ -338,18 +338,18 @@ function weinvite_public_event_rewrite_rules() {
         'top'
     );
 
-    // TEST FORMAT: pub_ prefix + flexible characters (alphanumeric, underscores, hyphens)
+    // TEST FORMAT: pub_ prefix + at least 8 characters (alphanumeric, underscores, hyphens)
     // Examples: pub_09f74fadf915c7217448f696, pub_test2_capacity_hidden_456
     // Long URL: /event/{TOKEN}
     add_rewrite_rule(
-        '^event/(pub_[a-zA-Z0-9_-]+)/?$',
+        '^event/(pub_[a-zA-Z0-9_-]{8,64})/?$',
         'index.php?weinvite_public_event=$matches[1]',
         'top'
     );
 
     // Short URL: /e/{TOKEN}
     add_rewrite_rule(
-        '^e/(pub_[a-zA-Z0-9_-]+)/?$',
+        '^e/(pub_[a-zA-Z0-9_-]{8,64})/?$',
         'index.php?weinvite_public_event=$matches[1]',
         'top'
     );
@@ -374,9 +374,9 @@ function weinvite_public_event_template_redirect() {
     if ( $event_token ) {
         // Validate token format - Support both production and test formats
         // Production: 8-character uppercase alphanumeric (e.g., 0C35A7AA)
-        // Test: pub_ + flexible characters (e.g., pub_09f74fadf915c7217448f696, pub_test2_capacity_hidden_456)
+        // Test: pub_ + 8-64 characters (e.g., pub_09f74fadf915c7217448f696, pub_test2_capacity_hidden_456)
         $is_production_format = preg_match( '/^[A-Z0-9]{8}$/', $event_token );
-        $is_test_format = preg_match( '/^pub_[a-zA-Z0-9_-]+$/', $event_token );
+        $is_test_format = preg_match( '/^pub_[a-zA-Z0-9_-]{8,64}$/', $event_token );
 
         if ( ! $is_production_format && ! $is_test_format ) {
             wp_die(
@@ -482,10 +482,10 @@ add_action( 'wp_enqueue_scripts', 'weinvite_public_event_enqueue_scripts', 20 );
 function weinvite_validate_event_token( $token ) {
     // Support both production and test token formats
     // Production: 8-character uppercase alphanumeric (e.g., 0C35A7AA)
-    // Test: pub_ + flexible characters (e.g., pub_09f74fadf915c7217448f696, pub_test2_capacity_hidden_456)
+    // Test: pub_ + 8-64 characters (e.g., pub_09f74fadf915c7217448f696, pub_test2_capacity_hidden_456)
 
     $is_production_format = preg_match( '/^[A-Z0-9]{8}$/', $token );
-    $is_test_format = preg_match( '/^pub_[a-zA-Z0-9_-]+$/', $token );
+    $is_test_format = preg_match( '/^pub_[a-zA-Z0-9_-]{8,64}$/', $token );
 
     return ( $is_production_format || $is_test_format );
 }
