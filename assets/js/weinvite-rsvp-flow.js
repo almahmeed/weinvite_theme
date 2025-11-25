@@ -660,6 +660,8 @@
    * Render RSVP card (right sidebar)
    */
   function renderRSVPCard(event) {
+    console.log('[MOBILE DEBUG] renderRSVPCard function called with event:', event);
+
     // Calculate capacity (use defaults if not provided)
     const capacity = event.capacity_limit || event.rsvp_settings?.invite_limit || 100;
     const rsvpCount = event.rsvp_count || 0;
@@ -668,6 +670,7 @@
 
     // Check if host wants to show capacity numbers
     const showCapacity = event.show_capacity !== false;
+    console.log('[MOBILE DEBUG] Capacity calculations:', { capacity, rsvpCount, spotsAvailable, showCapacity });
 
     const rsvpHTML = `
       <!-- Response Card Header (BUG #003 FIX) -->
@@ -750,9 +753,14 @@
     }
 
     // Attach form submit handler
+    console.log('[MOBILE DEBUG] renderRSVPCard: Attaching form submit handler...');
     const form = document.getElementById('rsvp-form');
+    console.log('[MOBILE DEBUG] RSVP form element:', form ? 'FOUND' : 'NOT FOUND');
     if (form) {
       form.addEventListener('submit', handleRSVPFormSubmit);
+      console.log('[MOBILE DEBUG] Event listener attached successfully to form');
+    } else {
+      console.error('[MOBILE DEBUG] ERROR: RSVP form element not found! Cannot attach event listener!');
     }
   }
 
