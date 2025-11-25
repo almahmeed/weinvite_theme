@@ -4,7 +4,7 @@
  * Phase 7: Sprint 3 Implementation
  * November 10, 2025
  * Version: 1.0.0
- * DEBUG VERSION: 2025-11-25-BUG013-FIX-V2-BUTTON-CLICK
+ * DEBUG VERSION: 2025-11-25-BUG013-FIX-V3-GLOBAL-ONCLICK
  * ============================================
  */
 
@@ -17,11 +17,11 @@
   const EVENT_TOKEN = config.eventToken || '';
   const NONCE = config.nonce || '';
 
-  console.log('🔧 WeInvite RSVP Flow initialized - DEBUG VERSION: 2025-11-25-BUG013-FIX-V2-BUTTON-CLICK', {
+  console.log('🔧 WeInvite RSVP Flow initialized - DEBUG VERSION: 2025-11-25-BUG013-FIX-V3-GLOBAL-ONCLICK', {
     apiUrl: API_URL,
     eventToken: EVENT_TOKEN,
     debugMode: true,
-    fix: 'Using button click handler instead of form submit'
+    fix: 'Using global onclick function to bypass scope issues'
   });
 
   /**
@@ -749,7 +749,7 @@
         </div>
 
         <!-- Submit Button -->
-        <button type="button" class="btn btn-primary btn-block" id="rsvp-submit-btn">
+        <button type="button" class="btn btn-primary btn-block" id="rsvp-submit-btn" onclick="window.WeInviteSubmitRSVP && window.WeInviteSubmitRSVP()">
           Get Verification Code
         </button>
       </form>
@@ -1242,6 +1242,24 @@
       console.log('[MOBILE DEBUG] Button restored after error');
     }
   }
+
+  /**
+   * GLOBAL WRAPPER: Expose submit function to window for onclick handler
+   * This solves the scope issue where event listeners can't access the function
+   */
+  window.WeInviteSubmitRSVP = async function() {
+    console.log('[MOBILE DEBUG] 🎯 GLOBAL FUNCTION CALLED: WeInviteSubmitRSVP');
+
+    const fakeEvent = {
+      preventDefault: () => {},
+      stopPropagation: () => {},
+      target: document.getElementById('rsvp-form')
+    };
+
+    await handleRSVPFormSubmit(fakeEvent);
+  };
+
+  console.log('[MOBILE DEBUG] ✅ Global WeInviteSubmitRSVP function registered on window');
 
   /**
    * Request OTP from API
