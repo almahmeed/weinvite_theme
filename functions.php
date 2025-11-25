@@ -452,7 +452,7 @@ function weinvite_public_event_enqueue_scripts() {
             'weinvite-rsvp-flow',
             get_template_directory_uri() . '/assets/js/weinvite-rsvp-flow.js',
             array(), // No jQuery dependency - vanilla JS
-            '1.0.0',
+            '1.0.1-bug013-fix-' . time(), // Cache buster - forces reload
             true // Load in footer
         );
 
