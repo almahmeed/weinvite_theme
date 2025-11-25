@@ -4,7 +4,7 @@
  * Phase 7: Sprint 3 Implementation
  * November 10, 2025
  * Version: 1.0.0
- * DEBUG VERSION: 2025-11-25-BUG013-FIX-V5-STEP-ALERTS
+ * DEBUG VERSION: 2025-11-25-BUG013-FIX-V6-API-TRACE
  * ============================================
  */
 
@@ -772,7 +772,7 @@
         </div>
 
         <!-- Submit Button -->
-        <button type="button" class="btn btn-primary btn-block" id="rsvp-submit-btn" onclick="alert('V4 CODE LOADED - Starting RSVP...'); window.WeInviteSubmitRSVP && window.WeInviteSubmitRSVP()">
+        <button type="button" class="btn btn-primary btn-block" id="rsvp-submit-btn" onclick="alert('V6 CODE LOADED - Starting RSVP...'); window.WeInviteSubmitRSVP && window.WeInviteSubmitRSVP()">
           Get Verification Code
         </button>
       </form>
@@ -1241,16 +1241,20 @@
 
     try {
       // Call request OTP API
+      alert('Step 4: Calling API to request OTP...');
       console.log('[MOBILE DEBUG] Calling requestOTP with:', { phone: phone ? 'present' : 'empty', eventToken, guestName });
       const otpResponse = await requestOTP(phone, eventToken, guestName, plusOnes);
       console.log('[MOBILE DEBUG] requestOTP SUCCESS, response:', otpResponse);
+      alert('Step 5: API responded! Now showing OTP modal...');
 
       // Show OTP modal
       console.log('[MOBILE DEBUG] Calling showOTPModal...');
       showOTPModal(phone, guestName, plusOnes, otpResponse);
       console.log('[MOBILE DEBUG] showOTPModal called successfully');
+      alert('Step 6: showOTPModal function completed! Dialog should be visible now.');
 
     } catch (error) {
+      alert('API ERROR: ' + error.message);
       console.error('[MOBILE DEBUG] ERROR in requestOTP catch block:', error);
       console.error('[MOBILE DEBUG] Error details:', {
         message: error.message,
