@@ -749,7 +749,7 @@
         </div>
 
         <!-- Submit Button -->
-        <button type="button" class="btn btn-primary btn-block" id="rsvp-submit-btn" onclick="window.WeInviteSubmitRSVP && window.WeInviteSubmitRSVP()">
+        <button type="button" class="btn btn-primary btn-block" id="rsvp-submit-btn" onclick="alert('Button clicked!'); window.WeInviteSubmitRSVP && window.WeInviteSubmitRSVP()">
           Get Verification Code
         </button>
       </form>
