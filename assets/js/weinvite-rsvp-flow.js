@@ -4,7 +4,7 @@
  * Phase 7: Sprint 3 Implementation
  * November 10, 2025
  * Version: 1.0.0
- * DEBUG VERSION: 2025-11-25-BUG013-FIX-V11-FORM-SUBMIT-HANDLER
+ * DEBUG VERSION: 2025-11-25-BUG013-FIX-V12-DELAYED-HANDLER
  * ============================================
  */
 
@@ -17,7 +17,7 @@
   const EVENT_TOKEN = config.eventToken || '';
   const NONCE = config.nonce || '';
 
-  console.log('🔧 WeInvite RSVP Flow initialized - DEBUG VERSION: 2025-11-25-BUG013-FIX-V11-FORM-SUBMIT-HANDLER', {
+  console.log('🔧 WeInvite RSVP Flow initialized - DEBUG VERSION: 2025-11-25-BUG013-FIX-V12-DELAYED-HANDLER', {
     apiUrl: API_URL,
     eventToken: EVENT_TOKEN,
     debugMode: true,
@@ -782,29 +782,38 @@
     }
 
     // Attach FORM submit handler (CRITICAL: Must intercept before page reload)
-    console.log('[MOBILE DEBUG] V11: Attaching FORM submit handler...');
-    const rsvpForm = document.getElementById('rsvp-form');
-    console.log('[MOBILE DEBUG] V11: Form element:', rsvpForm ? 'FOUND' : 'NOT FOUND');
+    // Use setTimeout to ensure DOM is fully rendered
+    console.log('[MOBILE DEBUG] V12: Scheduling FORM submit handler attachment...');
 
-    if (rsvpForm) {
-      rsvpForm.addEventListener('submit', async function(e) {
-        alert('V11: Form submit event captured!');
-        console.log('[MOBILE DEBUG] V11: Form submit event captured!');
+    setTimeout(function() {
+      const rsvpForm = document.getElementById('rsvp-form');
+      console.log('[MOBILE DEBUG] V12: Form element:', rsvpForm ? 'FOUND' : 'NOT FOUND');
 
-        // CRITICAL: Stop form submission IMMEDIATELY
-        e.preventDefault();
-        e.stopPropagation();
+      if (rsvpForm) {
+        alert('V12: Form found! Attaching submit handler...');
 
-        alert('V11: preventDefault called, form will NOT reload page');
-        console.log('[MOBILE DEBUG] V11: preventDefault called');
+        rsvpForm.addEventListener('submit', async function(e) {
+          alert('V12: Form submit event captured!');
+          console.log('[MOBILE DEBUG] V12: Form submit event captured!');
 
-        // Now handle the RSVP submission
-        await handleRSVPFormSubmit(e);
-      });
-      console.log('[MOBILE DEBUG] V11: Submit handler attached successfully to FORM');
-    } else {
-      console.error('[MOBILE DEBUG] V11: ERROR: Form not found! Cannot attach submit handler!');
-    }
+          // CRITICAL: Stop form submission IMMEDIATELY
+          e.preventDefault();
+          e.stopPropagation();
+
+          alert('V12: preventDefault called, form will NOT reload page');
+          console.log('[MOBILE DEBUG] V12: preventDefault called');
+
+          // Now handle the RSVP submission
+          await handleRSVPFormSubmit(e);
+        });
+
+        console.log('[MOBILE DEBUG] V12: Submit handler attached successfully to FORM');
+        alert('V12: Submit handler attached! Button should work now.');
+      } else {
+        alert('V12 ERROR: Form NOT found after timeout!');
+        console.error('[MOBILE DEBUG] V12: ERROR: Form not found after timeout!');
+      }
+    }, 100); // Wait 100ms for DOM to be ready
   }
 
   /**
