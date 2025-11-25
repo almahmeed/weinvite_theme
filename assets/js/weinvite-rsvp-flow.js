@@ -4,6 +4,7 @@
  * Phase 7: Sprint 3 Implementation
  * November 10, 2025
  * Version: 1.0.0
+ * DEBUG VERSION: 2025-11-25-BUG013-FIX
  * ============================================
  */
 
@@ -16,9 +17,10 @@
   const EVENT_TOKEN = config.eventToken || '';
   const NONCE = config.nonce || '';
 
-  console.log('WeInvite RSVP Flow initialized', {
+  console.log('🔧 WeInvite RSVP Flow initialized - DEBUG VERSION: 2025-11-25-BUG013-FIX', {
     apiUrl: API_URL,
-    eventToken: EVENT_TOKEN
+    eventToken: EVENT_TOKEN,
+    debugMode: true
   });
 
   /**
@@ -89,11 +91,21 @@
     const hasRsvpSession = sessionStorage.getItem('weinvite_rsvp_confirmed') === 'true';
     const sessionEventToken = sessionStorage.getItem('weinvite_event_token');
 
+    console.log('[MOBILE DEBUG] SessionStorage check:', {
+      hasRsvpSession,
+      sessionEventToken,
+      currentEventToken: EVENT_TOKEN,
+      matches: sessionEventToken === EVENT_TOKEN
+    });
+
     // Set global flag if user has RSVP'd to THIS event
     if (hasRsvpSession && sessionEventToken === EVENT_TOKEN) {
-      console.log('User has already RSVP\'d to this event (session storage)');
+      console.log('[MOBILE DEBUG] User has already RSVP\'d to this event (session storage)');
+      console.log('[MOBILE DEBUG] Setting WeInviteRSVPStatus = confirmed');
       window.WeInviteRSVPStatus = 'confirmed';
       window.WeInviteRSVPCode = sessionStorage.getItem('weinvite_rsvp_code') || '';
+    } else {
+      console.log('[MOBILE DEBUG] User has NOT RSVP\'d yet (or different event)');
     }
 
     // Fetch event data
@@ -248,11 +260,22 @@
     }
 
     // Render right column (BUG #011 FIX: Show confirmation if RSVP'd)
+    console.log('[MOBILE DEBUG] Rendering decision:', {
+      hasRsvpd,
+      isFull,
+      rsvpCount,
+      capacity,
+      WeInviteRSVPStatus: window.WeInviteRSVPStatus
+    });
+
     if (hasRsvpd) {
+      console.log('[MOBILE DEBUG] Rendering CONFIRMATION card (user already RSVP\'d)');
       renderConfirmationCard(event);
     } else if (isFull) {
+      console.log('[MOBILE DEBUG] Rendering WAITLIST card (event is full)');
       renderWaitlistCard(event);
     } else {
+      console.log('[MOBILE DEBUG] Rendering RSVP card (normal flow)');
       renderRSVPCard(event);
     }
 
