@@ -4,7 +4,7 @@
  * Phase 7: Sprint 3 Implementation
  * November 10, 2025
  * Version: 1.0.0
- * DEBUG VERSION: 2025-11-25-BUG013-FIX
+ * DEBUG VERSION: 2025-11-25-BUG013-FIX-V2-BUTTON-CLICK
  * ============================================
  */
 
@@ -17,10 +17,11 @@
   const EVENT_TOKEN = config.eventToken || '';
   const NONCE = config.nonce || '';
 
-  console.log('🔧 WeInvite RSVP Flow initialized - DEBUG VERSION: 2025-11-25-BUG013-FIX', {
+  console.log('🔧 WeInvite RSVP Flow initialized - DEBUG VERSION: 2025-11-25-BUG013-FIX-V2-BUTTON-CLICK', {
     apiUrl: API_URL,
     eventToken: EVENT_TOKEN,
-    debugMode: true
+    debugMode: true,
+    fix: 'Using button click handler instead of form submit'
   });
 
   /**
@@ -718,7 +719,7 @@
       ` : ''}
 
       <!-- Response Form (BUG #003) -->
-      <form id="rsvp-form" class="rsvp-form">
+      <form id="rsvp-form" class="rsvp-form" onsubmit="return false;">
         <!-- Plus Ones -->
         <div class="form-group">
           <label for="plus-ones" class="form-label">Number of Guests</label>
@@ -748,7 +749,7 @@
         </div>
 
         <!-- Submit Button -->
-        <button type="submit" class="btn btn-primary btn-block">
+        <button type="button" class="btn btn-primary btn-block" id="rsvp-submit-btn">
           Get Verification Code
         </button>
       </form>
@@ -775,15 +776,29 @@
       mobileRsvpCard.innerHTML = `<div class="rsvp-card">${rsvpHTML}</div>`;
     }
 
-    // Attach form submit handler
-    console.log('[MOBILE DEBUG] renderRSVPCard: Attaching form submit handler...');
-    const form = document.getElementById('rsvp-form');
-    console.log('[MOBILE DEBUG] RSVP form element:', form ? 'FOUND' : 'NOT FOUND');
-    if (form) {
-      form.addEventListener('submit', handleRSVPFormSubmit);
-      console.log('[MOBILE DEBUG] Event listener attached successfully to form');
+    // Attach button click handler (BUGFIX: Use button instead of form submit)
+    console.log('[MOBILE DEBUG] renderRSVPCard: Attaching button click handler...');
+    const submitButton = document.getElementById('rsvp-submit-btn');
+    console.log('[MOBILE DEBUG] Submit button element:', submitButton ? 'FOUND' : 'NOT FOUND');
+
+    if (submitButton) {
+      submitButton.addEventListener('click', async function(e) {
+        console.log('[MOBILE DEBUG] Button clicked! Starting RSVP flow...');
+        e.preventDefault();
+        e.stopPropagation();
+
+        // Create fake event object for handleRSVPFormSubmit
+        const fakeEvent = {
+          preventDefault: () => {},
+          stopPropagation: () => {},
+          target: document.getElementById('rsvp-form')
+        };
+
+        await handleRSVPFormSubmit(fakeEvent);
+      });
+      console.log('[MOBILE DEBUG] Click handler attached successfully to button');
     } else {
-      console.error('[MOBILE DEBUG] ERROR: RSVP form element not found! Cannot attach event listener!');
+      console.error('[MOBILE DEBUG] ERROR: Submit button not found! Cannot attach click handler!');
     }
   }
 
