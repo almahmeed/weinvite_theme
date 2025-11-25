@@ -4,7 +4,7 @@
  * Phase 7: Sprint 3 Implementation
  * November 10, 2025
  * Version: 1.0.0
- * DEBUG VERSION: 2025-11-25-BUG013-FIX-V13-DUAL-HANDLERS
+ * DEBUG VERSION: 2025-11-25-BUG013-FIX-V14-EVENT-DIAGNOSTICS
  * ============================================
  */
 
@@ -17,7 +17,7 @@
   const EVENT_TOKEN = config.eventToken || '';
   const NONCE = config.nonce || '';
 
-  console.log('🔧 WeInvite RSVP Flow initialized - DEBUG VERSION: 2025-11-25-BUG013-FIX-V13-DUAL-HANDLERS', {
+  console.log('🔧 WeInvite RSVP Flow initialized - DEBUG VERSION: 2025-11-25-BUG013-FIX-V14-EVENT-DIAGNOSTICS', {
     apiUrl: API_URL,
     eventToken: EVENT_TOKEN,
     debugMode: true,
@@ -788,27 +788,26 @@
     setTimeout(function() {
       const rsvpForm = document.getElementById('rsvp-form');
       const submitButton = document.getElementById('rsvp-submit-btn');
-      console.log('[MOBILE DEBUG] V13: Form element:', rsvpForm ? 'FOUND' : 'NOT FOUND');
-      console.log('[MOBILE DEBUG] V13: Button element:', submitButton ? 'FOUND' : 'NOT FOUND');
+      console.log('[MOBILE DEBUG] V14: Form element:', rsvpForm ? 'FOUND' : 'NOT FOUND');
+      console.log('[MOBILE DEBUG] V14: Button element:', submitButton ? 'FOUND' : 'NOT FOUND');
 
       if (rsvpForm && submitButton) {
-        alert('V13: Form AND button found!');
+        // Check button properties
+        const buttonInfo = 'Disabled=' + submitButton.disabled +
+                          ', Type=' + submitButton.type +
+                          ', Display=' + window.getComputedStyle(submitButton).display +
+                          ', PointerEvents=' + window.getComputedStyle(submitButton).pointerEvents;
 
-        // APPROACH 1: Listen to form submit event
-        rsvpForm.addEventListener('submit', async function(e) {
-          alert('V13: Form SUBMIT event fired!');
-          e.preventDefault();
-          e.stopPropagation();
-          await handleRSVPFormSubmit(e);
-        });
+        alert('V14: Button found! ' + buttonInfo);
 
-        // APPROACH 2: Listen to button click event (backup)
+        // Try multiple event capture methods
+
+        // Method 1: Click with capture phase
         submitButton.addEventListener('click', async function(e) {
-          alert('V13: Button CLICK event fired!');
+          alert('V14: CLICK captured (capture phase)!');
           e.preventDefault();
           e.stopPropagation();
 
-          // Manually trigger form submission handler
           const formEvent = {
             preventDefault: () => {},
             stopPropagation: () => {},
@@ -816,12 +815,26 @@
           };
 
           await handleRSVPFormSubmit(formEvent);
+        }, true); // TRUE = capture phase
+
+        // Method 2: Click without capture (bubble phase)
+        submitButton.addEventListener('click', async function(e) {
+          alert('V14: CLICK captured (bubble phase)!');
+        }, false);
+
+        // Method 3: Mousedown event
+        submitButton.addEventListener('mousedown', function(e) {
+          alert('V14: MOUSEDOWN captured!');
         });
 
-        console.log('[MOBILE DEBUG] V13: Both handlers attached!');
-        alert('V13: Both submit AND click handlers attached!');
+        // Method 4: Touchstart for mobile
+        submitButton.addEventListener('touchstart', function(e) {
+          alert('V14: TOUCHSTART captured!');
+        });
+
+        alert('V14: All 4 event listeners attached!');
       } else {
-        alert('V13 ERROR: Form or button NOT found! Form=' + (rsvpForm ? 'YES' : 'NO') + ', Button=' + (submitButton ? 'YES' : 'NO'));
+        alert('V14 ERROR: Form or button NOT found!');
       }
     }, 100);
   }
