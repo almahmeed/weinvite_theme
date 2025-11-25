@@ -4,7 +4,7 @@
  * Phase 7: Sprint 3 Implementation
  * November 10, 2025
  * Version: 1.0.0
- * DEBUG VERSION: 2025-11-25-BUG013-FIX-V15-ATTACH-ALL-BUTTONS
+ * DEBUG VERSION: 2025-11-25-BUG013-FIX-V16-FORM-SPECIFIC-INPUTS
  * ============================================
  */
 
@@ -17,7 +17,7 @@
   const EVENT_TOKEN = config.eventToken || '';
   const NONCE = config.nonce || '';
 
-  console.log('🔧 WeInvite RSVP Flow initialized - DEBUG VERSION: 2025-11-25-BUG013-FIX-V15-ATTACH-ALL-BUTTONS', {
+  console.log('🔧 WeInvite RSVP Flow initialized - DEBUG VERSION: 2025-11-25-BUG013-FIX-V16-FORM-SPECIFIC-INPUTS', {
     apiUrl: API_URL,
     eventToken: EVENT_TOKEN,
     debugMode: true,
@@ -811,25 +811,42 @@
           const btnParent = btn.closest('.mobile-rsvp-card') ? 'MOBILE' : 'DESKTOP';
 
           btn.addEventListener('click', async function(e) {
-            alert('V15: Button #' + index + ' (' + btnParent + ') CLICKED!');
+            alert('V16: Button #' + index + ' (' + btnParent + ') CLICKED!');
             e.preventDefault();
             e.stopPropagation();
 
+            // Get the FORM that contains THIS button
             const form = btn.closest('form');
+
+            if (!form) {
+              alert('V16 ERROR: Could not find form for button #' + index);
+              return;
+            }
+
+            // Get inputs from THIS SPECIFIC form (not by ID, which finds the first one)
+            const phoneInput = form.querySelector('#phone-number');
+            const plusOnesSelect = form.querySelector('#plus-ones');
+
+            alert('V16: Found phone input in ' + btnParent + ' form! Value length = ' + (phoneInput ? phoneInput.value.length : 'NULL'));
+
+            // Create event with form-specific elements
             const formEvent = {
               preventDefault: () => {},
               stopPropagation: () => {},
-              target: form
+              target: form,
+              phoneInput: phoneInput,
+              plusOnesSelect: plusOnesSelect,
+              submitButton: btn
             };
 
             await handleRSVPFormSubmit(formEvent);
           }, true);
 
           btn.addEventListener('touchstart', function(e) {
-            alert('V15: Button #' + index + ' (' + btnParent + ') TOUCHED!');
+            alert('V16: Button #' + index + ' (' + btnParent + ') TOUCHED!');
           });
 
-          console.log('[MOBILE DEBUG] V15: Attached events to button #' + index + ' (' + btnParent + ')');
+          console.log('[MOBILE DEBUG] V16: Attached events to button #' + index + ' (' + btnParent + ')');
         });
 
         alert('V15: Attached events to ALL ' + allButtons.length + ' buttons!');
@@ -1173,18 +1190,27 @@
    * Handle RSVP form submission
    */
   async function handleRSVPFormSubmit(e) {
-    console.log('[MOBILE DEBUG] Form submit handler called');
+    console.log('[MOBILE DEBUG V16] Form submit handler called');
     e.preventDefault();
-    e.stopPropagation(); // BUGFIX: Prevent event bubbling that might cause page reload
+    e.stopPropagation();
 
-    const phoneInput = document.getElementById('phone-number');
-    const plusOnesSelect = document.getElementById('plus-ones');
-    const submitButton = document.getElementById('rsvp-submit-btn'); // BUGFIX: Get button by ID instead of querySelector
+    // V16: Use form-specific elements passed from the click handler
+    let phoneInput = e.phoneInput;
+    let plusOnesSelect = e.plusOnesSelect;
+    let submitButton = e.submitButton;
 
-    console.log('[MOBILE DEBUG] Form elements:', { phoneInput: !!phoneInput, plusOnesSelect: !!plusOnesSelect, submitButton: !!submitButton });
+    // Fallback to getElementById if not passed (shouldn't happen with V16)
+    if (!phoneInput || !plusOnesSelect || !submitButton) {
+      alert('V16: Elements not passed, using fallback getElementById');
+      phoneInput = phoneInput || document.getElementById('phone-number');
+      plusOnesSelect = plusOnesSelect || document.getElementById('plus-ones');
+      submitButton = submitButton || document.getElementById('rsvp-submit-btn');
+    }
+
+    console.log('[MOBILE DEBUG V16] Form elements:', { phoneInput: !!phoneInput, plusOnesSelect: !!plusOnesSelect, submitButton: !!submitButton });
 
     if (!phoneInput || !plusOnesSelect) {
-      console.error('[MOBILE DEBUG] Missing form elements!');
+      console.error('[MOBILE DEBUG V16] Missing form elements!');
       alert('EARLY EXIT 1: Form elements not found!');
       return;
     }
@@ -1195,14 +1221,12 @@
     }
 
     // Debug: Check what we're getting from the phone input
-    alert('DEBUG: phoneInput.value = "' + phoneInput.value + '"');
-    alert('DEBUG: phoneInput.value.length = ' + phoneInput.value.length);
+    alert('V16 DEBUG: phoneInput.value = "' + phoneInput.value + '"');
 
     const phone = phoneInput.value.trim();
     const plusOnes = parseInt(plusOnesSelect.value);
 
-    alert('DEBUG: After trim, phone = "' + phone + '"');
-    alert('DEBUG: After trim, phone.length = ' + phone.length);
+    alert('V16 DEBUG: After trim, phone = "' + phone + '", length = ' + phone.length);
 
     console.log('[MOBILE DEBUG] Form values:', { phone: phone ? 'present' : 'empty', plusOnes });
 
