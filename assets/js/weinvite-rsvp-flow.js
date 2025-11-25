@@ -4,7 +4,7 @@
  * Phase 7: Sprint 3 Implementation
  * November 10, 2025
  * Version: 1.0.0
- * DEBUG VERSION: 2025-11-25-BUG013-FIX-V14-EVENT-DIAGNOSTICS
+ * DEBUG VERSION: 2025-11-25-BUG013-FIX-V15-ATTACH-ALL-BUTTONS
  * ============================================
  */
 
@@ -17,7 +17,7 @@
   const EVENT_TOKEN = config.eventToken || '';
   const NONCE = config.nonce || '';
 
-  console.log('🔧 WeInvite RSVP Flow initialized - DEBUG VERSION: 2025-11-25-BUG013-FIX-V14-EVENT-DIAGNOSTICS', {
+  console.log('🔧 WeInvite RSVP Flow initialized - DEBUG VERSION: 2025-11-25-BUG013-FIX-V15-ATTACH-ALL-BUTTONS', {
     apiUrl: API_URL,
     eventToken: EVENT_TOKEN,
     debugMode: true,
@@ -786,55 +786,55 @@
     console.log('[MOBILE DEBUG] V12: Scheduling FORM submit handler attachment...');
 
     setTimeout(function() {
+      // Check for DUPLICATE buttons/forms (desktop + mobile)
+      const allForms = document.querySelectorAll('#rsvp-form');
+      const allButtons = document.querySelectorAll('#rsvp-submit-btn');
+
+      alert('V15: Found ' + allForms.length + ' forms and ' + allButtons.length + ' buttons!');
+
       const rsvpForm = document.getElementById('rsvp-form');
       const submitButton = document.getElementById('rsvp-submit-btn');
-      console.log('[MOBILE DEBUG] V14: Form element:', rsvpForm ? 'FOUND' : 'NOT FOUND');
-      console.log('[MOBILE DEBUG] V14: Button element:', submitButton ? 'FOUND' : 'NOT FOUND');
 
       if (rsvpForm && submitButton) {
-        // Check button properties
-        const buttonInfo = 'Disabled=' + submitButton.disabled +
-                          ', Type=' + submitButton.type +
-                          ', Display=' + window.getComputedStyle(submitButton).display +
-                          ', PointerEvents=' + window.getComputedStyle(submitButton).pointerEvents;
+        // Check which parent contains the button
+        const parentInfo = submitButton.closest('.mobile-rsvp-card') ? 'MOBILE' :
+                          submitButton.closest('#rsvp-card') ? 'DESKTOP' : 'UNKNOWN';
 
-        alert('V14: Button found! ' + buttonInfo);
+        const buttonInfo = 'Parent=' + parentInfo +
+                          ', Disabled=' + submitButton.disabled +
+                          ', Display=' + window.getComputedStyle(submitButton).display;
 
-        // Try multiple event capture methods
+        alert('V15: Button in ' + parentInfo + ' layout! ' + buttonInfo);
 
-        // Method 1: Click with capture phase
-        submitButton.addEventListener('click', async function(e) {
-          alert('V14: CLICK captured (capture phase)!');
-          e.preventDefault();
-          e.stopPropagation();
+        // Attach to ALL buttons (both desktop and mobile)
+        allButtons.forEach(function(btn, index) {
+          const btnParent = btn.closest('.mobile-rsvp-card') ? 'MOBILE' : 'DESKTOP';
 
-          const formEvent = {
-            preventDefault: () => {},
-            stopPropagation: () => {},
-            target: rsvpForm
-          };
+          btn.addEventListener('click', async function(e) {
+            alert('V15: Button #' + index + ' (' + btnParent + ') CLICKED!');
+            e.preventDefault();
+            e.stopPropagation();
 
-          await handleRSVPFormSubmit(formEvent);
-        }, true); // TRUE = capture phase
+            const form = btn.closest('form');
+            const formEvent = {
+              preventDefault: () => {},
+              stopPropagation: () => {},
+              target: form
+            };
 
-        // Method 2: Click without capture (bubble phase)
-        submitButton.addEventListener('click', async function(e) {
-          alert('V14: CLICK captured (bubble phase)!');
-        }, false);
+            await handleRSVPFormSubmit(formEvent);
+          }, true);
 
-        // Method 3: Mousedown event
-        submitButton.addEventListener('mousedown', function(e) {
-          alert('V14: MOUSEDOWN captured!');
+          btn.addEventListener('touchstart', function(e) {
+            alert('V15: Button #' + index + ' (' + btnParent + ') TOUCHED!');
+          });
+
+          console.log('[MOBILE DEBUG] V15: Attached events to button #' + index + ' (' + btnParent + ')');
         });
 
-        // Method 4: Touchstart for mobile
-        submitButton.addEventListener('touchstart', function(e) {
-          alert('V14: TOUCHSTART captured!');
-        });
-
-        alert('V14: All 4 event listeners attached!');
+        alert('V15: Attached events to ALL ' + allButtons.length + ' buttons!');
       } else {
-        alert('V14 ERROR: Form or button NOT found!');
+        alert('V15 ERROR: Form or button NOT found!');
       }
     }, 100);
   }
