@@ -4,7 +4,7 @@
  * Phase 7: Sprint 3 Implementation
  * November 10, 2025
  * Version: 1.0.0
- * DEBUG VERSION: 2025-11-25-BUG013-FIX-V4-EARLY-REGISTER
+ * DEBUG VERSION: 2025-11-25-BUG013-FIX-V5-STEP-ALERTS
  * ============================================
  */
 
@@ -83,6 +83,7 @@
 
   // REGISTER GLOBAL FUNCTION IMMEDIATELY (before DOM loads)
   window.WeInviteSubmitRSVP = async function() {
+    alert('Step 1: Global function called!');
     console.log('[MOBILE DEBUG] 🎯 GLOBAL FUNCTION CALLED: WeInviteSubmitRSVP');
 
     const fakeEvent = {
@@ -91,7 +92,15 @@
       target: document.getElementById('rsvp-form')
     };
 
-    await handleRSVPFormSubmit(fakeEvent);
+    alert('Step 2: About to call handleRSVPFormSubmit');
+
+    try {
+      await handleRSVPFormSubmit(fakeEvent);
+      alert('Step 3: handleRSVPFormSubmit completed!');
+    } catch (error) {
+      alert('ERROR: ' + error.message);
+      console.error('Error in WeInviteSubmitRSVP:', error);
+    }
   };
   console.log('[MOBILE DEBUG] ✅ Global WeInviteSubmitRSVP registered EARLY');
 
@@ -763,7 +772,7 @@
         </div>
 
         <!-- Submit Button -->
-        <button type="button" class="btn btn-primary btn-block" id="rsvp-submit-btn" onclick="alert('Button clicked!'); window.WeInviteSubmitRSVP && window.WeInviteSubmitRSVP()">
+        <button type="button" class="btn btn-primary btn-block" id="rsvp-submit-btn" onclick="alert('V4 CODE LOADED - Starting RSVP...'); window.WeInviteSubmitRSVP && window.WeInviteSubmitRSVP()">
           Get Verification Code
         </button>
       </form>
