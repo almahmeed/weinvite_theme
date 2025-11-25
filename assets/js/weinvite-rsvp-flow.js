@@ -1090,16 +1090,24 @@
    * Handle RSVP form submission
    */
   async function handleRSVPFormSubmit(e) {
+    console.log('[MOBILE DEBUG] Form submit handler called');
     e.preventDefault();
+    e.stopPropagation(); // BUGFIX: Prevent event bubbling that might cause page reload
 
     const phoneInput = document.getElementById('phone-number');
     const plusOnesSelect = document.getElementById('plus-ones');
     const submitButton = e.target.querySelector('button[type="submit"]');
 
-    if (!phoneInput || !plusOnesSelect) return;
+    console.log('[MOBILE DEBUG] Form elements:', { phoneInput: !!phoneInput, plusOnesSelect: !!plusOnesSelect, submitButton: !!submitButton });
+
+    if (!phoneInput || !plusOnesSelect) {
+      console.error('[MOBILE DEBUG] Missing form elements!');
+      return;
+    }
 
     const phone = phoneInput.value.trim();
     const plusOnes = parseInt(plusOnesSelect.value);
+    console.log('[MOBILE DEBUG] Form values:', { phone: phone ? 'present' : 'empty', plusOnes });
 
     // Validate phone number (BUG #005 & #006 FIX)
     if (phone === '') {
@@ -1160,21 +1168,32 @@
     const originalButtonText = submitButton.textContent;
     submitButton.disabled = true;
     submitButton.innerHTML = '<span class="spinner"></span> Sending Code...';
+    console.log('[MOBILE DEBUG] Button disabled, calling requestOTP...');
 
     try {
       // Call request OTP API
+      console.log('[MOBILE DEBUG] Calling requestOTP with:', { phone: phone ? 'present' : 'empty', eventToken, guestName });
       const otpResponse = await requestOTP(phone, eventToken, guestName, plusOnes);
+      console.log('[MOBILE DEBUG] requestOTP SUCCESS, response:', otpResponse);
 
       // Show OTP modal
+      console.log('[MOBILE DEBUG] Calling showOTPModal...');
       showOTPModal(phone, guestName, plusOnes, otpResponse);
+      console.log('[MOBILE DEBUG] showOTPModal called successfully');
 
     } catch (error) {
-      console.error('Error requesting OTP:', error);
+      console.error('[MOBILE DEBUG] ERROR in requestOTP catch block:', error);
+      console.error('[MOBILE DEBUG] Error details:', {
+        message: error.message,
+        stack: error.stack,
+        toString: error.toString()
+      });
       showFormError(phoneInput, error.message || 'Unable to send verification code. Please try again.');
 
       // Restore button
       submitButton.disabled = false;
       submitButton.textContent = originalButtonText;
+      console.log('[MOBILE DEBUG] Button restored after error');
     }
   }
 
@@ -1183,44 +1202,59 @@
    */
   async function requestOTP(phone, eventToken, guestName, plusOnes) {
     const apiEndpoint = `${API_URL}rsvp/request-otp`;
-    console.log('Requesting OTP:', { phone, eventToken, guestName });
+    console.log('[MOBILE DEBUG] requestOTP function started');
+    console.log('[MOBILE DEBUG] API endpoint:', apiEndpoint);
+    console.log('[MOBILE DEBUG] Request params:', { phone, eventToken, guestName });
 
-    const response = await fetch(apiEndpoint, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        phone: phone,
-        event_token: eventToken,
-        name: guestName
-      })
-    });
+    try {
+      const response = await fetch(apiEndpoint, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          phone: phone,
+          event_token: eventToken,
+          name: guestName
+        })
+      });
 
-    const data = await response.json();
+      console.log('[MOBILE DEBUG] Fetch completed, response status:', response.status, response.ok);
 
-    if (!response.ok || !data.success) {
-      const errorMessage = data.message || 'Failed to send verification code';
-      throw new Error(errorMessage);
+      const data = await response.json();
+      console.log('[MOBILE DEBUG] Response data:', data);
+
+      if (!response.ok || !data.success) {
+        const errorMessage = data.message || 'Failed to send verification code';
+        console.error('[MOBILE DEBUG] API returned error:', errorMessage);
+        throw new Error(errorMessage);
+      }
+
+      console.log('[MOBILE DEBUG] OTP requested successfully:', data);
+
+      // Log test OTP if in test mode
+      if (data.test_mode && data.otp_for_testing) {
+        console.log('🔐 TEST MODE - OTP Code:', data.otp_for_testing);
+      }
+
+      // Store data for OTP verification
+      window.WeInviteRSVPData = { phone, eventToken, guestName, plusOnes };
+
+      return data;
+    } catch (fetchError) {
+      console.error('[MOBILE DEBUG] Fetch error in requestOTP:', fetchError);
+      throw fetchError;
     }
-
-    console.log('OTP requested successfully:', data);
-
-    // Log test OTP if in test mode
-    if (data.test_mode && data.otp_for_testing) {
-      console.log('🔐 TEST MODE - OTP Code:', data.otp_for_testing);
-    }
-
-    // Store data for OTP verification
-    window.WeInviteRSVPData = { phone, eventToken, guestName, plusOnes };
-
-    return data;
   }
 
   /**
    * Show OTP modal
    */
   function showOTPModal(phone, guestName, plusOnes, otpResponse, isWaitlist = false) {
+    console.log('[MOBILE DEBUG] showOTPModal function started');
+    console.log('[MOBILE DEBUG] Parameters:', { phone: phone ? 'present' : 'missing', guestName, plusOnes, isWaitlist });
+    console.log('[MOBILE DEBUG] otpResponse:', otpResponse);
+
     // Store context for verification
     window.WeInviteOTPContext = {
       phone: phone,
@@ -1228,24 +1262,30 @@
       plusOnes: plusOnes || 0,
       isWaitlist: isWaitlist
     };
+    console.log('[MOBILE DEBUG] OTP context stored in window');
 
     // Check if modal already exists
     let modal = document.getElementById('otp-modal');
+    console.log('[MOBILE DEBUG] Existing modal element:', modal ? 'found' : 'not found');
 
     if (!modal) {
       // Create modal
+      console.log('[MOBILE DEBUG] Creating new modal element');
       modal = document.createElement('div');
       modal.id = 'otp-modal';
       modal.className = 'modal';
       document.body.appendChild(modal);
+      console.log('[MOBILE DEBUG] Modal element created and appended to body');
     }
 
     // Format phone for display (show last 4 digits)
     const maskedPhone = phone.replace(/(\+\d{1,3})\d+(\d{4})/, '$1***$2');
+    console.log('[MOBILE DEBUG] Masked phone:', maskedPhone);
 
     // Check if test mode and get OTP
     const testMode = otpResponse && otpResponse.test_mode;
     const testOTP = testMode ? otpResponse.otp_for_testing : null;
+    console.log('[MOBILE DEBUG] Test mode:', testMode, 'Test OTP:', testOTP ? 'present' : 'not present');
 
     // Button text depends on context
     const buttonText = isWaitlist ? 'Join Waitlist' : 'Verify & Complete RSVP';
@@ -1307,11 +1347,15 @@
     `;
 
     // Show modal
+    console.log('[MOBILE DEBUG] Setting modal display to flex...');
     modal.style.display = 'flex';
     document.body.style.overflow = 'hidden';
+    console.log('[MOBILE DEBUG] Modal displayed! body overflow set to hidden');
 
     // Initialize OTP input handlers
+    console.log('[MOBILE DEBUG] Initializing OTP input handlers...');
     initOTPInput();
+    console.log('[MOBILE DEBUG] showOTPModal function completed successfully!');
 
     // Start countdown
     startResendCountdown(60);
