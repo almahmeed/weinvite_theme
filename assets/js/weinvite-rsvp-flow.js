@@ -4,7 +4,7 @@
  * Phase 7: Sprint 3 Implementation
  * November 10, 2025
  * Version: 1.0.0
- * DEBUG VERSION: 2025-11-25-BUG013-FIX-V10-DEBUG-PHONE-INPUT
+ * DEBUG VERSION: 2025-11-25-BUG013-FIX-V11-FORM-SUBMIT-HANDLER
  * ============================================
  */
 
@@ -17,7 +17,7 @@
   const EVENT_TOKEN = config.eventToken || '';
   const NONCE = config.nonce || '';
 
-  console.log('🔧 WeInvite RSVP Flow initialized - DEBUG VERSION: 2025-11-25-BUG013-FIX-V10-DEBUG-PHONE-INPUT', {
+  console.log('🔧 WeInvite RSVP Flow initialized - DEBUG VERSION: 2025-11-25-BUG013-FIX-V11-FORM-SUBMIT-HANDLER', {
     apiUrl: API_URL,
     eventToken: EVENT_TOKEN,
     debugMode: true,
@@ -81,28 +81,10 @@
    * ==========================================
    */
 
-  // REGISTER GLOBAL FUNCTION IMMEDIATELY (before DOM loads)
-  window.WeInviteSubmitRSVP = async function() {
-    alert('Step 1: Global function called!');
-    console.log('[MOBILE DEBUG] 🎯 GLOBAL FUNCTION CALLED: WeInviteSubmitRSVP');
+  // Store handleRSVPFormSubmit reference globally so we can access it
+  let globalHandleRSVPFormSubmit = null;
 
-    const fakeEvent = {
-      preventDefault: () => {},
-      stopPropagation: () => {},
-      target: document.getElementById('rsvp-form')
-    };
-
-    alert('Step 2: About to call handleRSVPFormSubmit');
-
-    try {
-      await handleRSVPFormSubmit(fakeEvent);
-      alert('Step 3: handleRSVPFormSubmit completed!');
-    } catch (error) {
-      alert('ERROR: ' + error.message);
-      console.error('Error in WeInviteSubmitRSVP:', error);
-    }
-  };
-  console.log('[MOBILE DEBUG] ✅ Global WeInviteSubmitRSVP registered EARLY');
+  console.log('[MOBILE DEBUG] ✅ Preparing to register form submit handler');
 
   // Page load initialization
   document.addEventListener('DOMContentLoaded', function() {
@@ -772,7 +754,7 @@
         </div>
 
         <!-- Submit Button -->
-        <button type="button" class="btn btn-primary btn-block" id="rsvp-submit-btn" onclick="alert('V8 - TRACE BEFORE TRY'); window.WeInviteSubmitRSVP && window.WeInviteSubmitRSVP()">
+        <button type="submit" class="btn btn-primary btn-block" id="rsvp-submit-btn">
           Get Verification Code
         </button>
       </form>
@@ -799,29 +781,29 @@
       mobileRsvpCard.innerHTML = `<div class="rsvp-card">${rsvpHTML}</div>`;
     }
 
-    // Attach button click handler (BUGFIX: Use button instead of form submit)
-    console.log('[MOBILE DEBUG] renderRSVPCard: Attaching button click handler...');
-    const submitButton = document.getElementById('rsvp-submit-btn');
-    console.log('[MOBILE DEBUG] Submit button element:', submitButton ? 'FOUND' : 'NOT FOUND');
+    // Attach FORM submit handler (CRITICAL: Must intercept before page reload)
+    console.log('[MOBILE DEBUG] V11: Attaching FORM submit handler...');
+    const rsvpForm = document.getElementById('rsvp-form');
+    console.log('[MOBILE DEBUG] V11: Form element:', rsvpForm ? 'FOUND' : 'NOT FOUND');
 
-    if (submitButton) {
-      submitButton.addEventListener('click', async function(e) {
-        console.log('[MOBILE DEBUG] Button clicked! Starting RSVP flow...');
+    if (rsvpForm) {
+      rsvpForm.addEventListener('submit', async function(e) {
+        alert('V11: Form submit event captured!');
+        console.log('[MOBILE DEBUG] V11: Form submit event captured!');
+
+        // CRITICAL: Stop form submission IMMEDIATELY
         e.preventDefault();
         e.stopPropagation();
 
-        // Create fake event object for handleRSVPFormSubmit
-        const fakeEvent = {
-          preventDefault: () => {},
-          stopPropagation: () => {},
-          target: document.getElementById('rsvp-form')
-        };
+        alert('V11: preventDefault called, form will NOT reload page');
+        console.log('[MOBILE DEBUG] V11: preventDefault called');
 
-        await handleRSVPFormSubmit(fakeEvent);
+        // Now handle the RSVP submission
+        await handleRSVPFormSubmit(e);
       });
-      console.log('[MOBILE DEBUG] Click handler attached successfully to button');
+      console.log('[MOBILE DEBUG] V11: Submit handler attached successfully to FORM');
     } else {
-      console.error('[MOBILE DEBUG] ERROR: Submit button not found! Cannot attach click handler!');
+      console.error('[MOBILE DEBUG] V11: ERROR: Form not found! Cannot attach submit handler!');
     }
   }
 
