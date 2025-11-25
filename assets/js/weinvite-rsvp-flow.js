@@ -4,7 +4,7 @@
  * Phase 7: Sprint 3 Implementation
  * November 10, 2025
  * Version: 1.0.0
- * DEBUG VERSION: 2025-11-25-BUG013-FIX-V6-API-TRACE
+ * DEBUG VERSION: 2025-11-25-BUG013-FIX-V7-BUTTON-FIX
  * ============================================
  */
 
@@ -772,7 +772,7 @@
         </div>
 
         <!-- Submit Button -->
-        <button type="button" class="btn btn-primary btn-block" id="rsvp-submit-btn" onclick="alert('V6 CODE LOADED - Starting RSVP...'); window.WeInviteSubmitRSVP && window.WeInviteSubmitRSVP()">
+        <button type="button" class="btn btn-primary btn-block" id="rsvp-submit-btn" onclick="alert('V7 CODE - BUTTON FIX!'); window.WeInviteSubmitRSVP && window.WeInviteSubmitRSVP()">
           Get Verification Code
         </button>
       </form>
@@ -1165,12 +1165,18 @@
 
     const phoneInput = document.getElementById('phone-number');
     const plusOnesSelect = document.getElementById('plus-ones');
-    const submitButton = e.target.querySelector('button[type="submit"]');
+    const submitButton = document.getElementById('rsvp-submit-btn'); // BUGFIX: Get button by ID instead of querySelector
 
     console.log('[MOBILE DEBUG] Form elements:', { phoneInput: !!phoneInput, plusOnesSelect: !!plusOnesSelect, submitButton: !!submitButton });
 
     if (!phoneInput || !plusOnesSelect) {
       console.error('[MOBILE DEBUG] Missing form elements!');
+      alert('ERROR: Form elements not found!');
+      return;
+    }
+
+    if (!submitButton) {
+      alert('ERROR: Submit button not found!');
       return;
     }
 
