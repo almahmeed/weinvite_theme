@@ -4,7 +4,7 @@
  * Phase 7: Sprint 3 Implementation
  * November 10, 2025
  * Version: 1.0.0
- * DEBUG VERSION: 2025-11-25-BUG013-FIX-V8-TRACE-BEFORE-TRY
+ * DEBUG VERSION: 2025-11-25-BUG013-FIX-V9-TRACE-ALL-EXITS
  * ============================================
  */
 
@@ -1171,12 +1171,12 @@
 
     if (!phoneInput || !plusOnesSelect) {
       console.error('[MOBILE DEBUG] Missing form elements!');
-      alert('ERROR: Form elements not found!');
+      alert('EARLY EXIT 1: Form elements not found!');
       return;
     }
 
     if (!submitButton) {
-      alert('ERROR: Submit button not found!');
+      alert('EARLY EXIT 2: Submit button not found!');
       return;
     }
 
@@ -1186,6 +1186,7 @@
 
     // Validate phone number (BUG #005 & #006 FIX)
     if (phone === '') {
+      alert('EARLY EXIT 3: Phone is blank!');
       showFormError(phoneInput, 'Phone Number cannot be blank');
       return;
     }
@@ -1197,12 +1198,14 @@
 
     // Check for invalid characters (anything other than +, digits, spaces, -, (, ))
     if (!/^[\d\s\+\-\(\)]+$/.test(phone)) {
+      alert('EARLY EXIT 4: Invalid characters in phone!');
       showFormError(phoneInput, 'Phone Number contains invalid characters');
       return;
     }
 
     // Check if it starts with + or digit
     if (!/^[\+\d]/.test(phone)) {
+      alert('EARLY EXIT 5: Phone doesnt start with + or digit!');
       showFormError(phoneInput, 'Phone Number must start with + or a digit');
       return;
     }
@@ -1212,17 +1215,20 @@
 
     // Check digit count (8-15 digits)
     if (digitsOnly.length < 8) {
+      alert('EARLY EXIT 6: Phone too short! Only ' + digitsOnly.length + ' digits');
       showFormError(phoneInput, 'Phone Number must contain at least 8 digits');
       return;
     }
 
     if (digitsOnly.length > 15) {
+      alert('EARLY EXIT 7: Phone too long!');
       showFormError(phoneInput, 'Phone Number cannot exceed 15 digits');
       return;
     }
 
     // Additional validation: ensure it's not obviously invalid patterns
     if (/^0+$/.test(digitsOnly) || /^1+$/.test(digitsOnly)) {
+      alert('EARLY EXIT 8: Invalid pattern (all 0s or 1s)!');
       showFormError(phoneInput, 'Please enter a valid phone number');
       return;
     }
@@ -1232,6 +1238,7 @@
     const eventToken = EVENT_TOKEN;
 
     if (!currentEvent || !eventToken) {
+      alert('EARLY EXIT 9: Event data not available!');
       showFormError(phoneInput, 'Event data not available. Please refresh the page.');
       return;
     }
